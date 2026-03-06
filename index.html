@@ -760,10 +760,8 @@ async function sendMagicLink(){
   document.getElementById('auth-step-sent').style.display='block';
 }
 
-async function doSignOut(){
-  const btn=document.querySelector('#auth-step-loggedin .auth-btn-main');
-  if(btn){btn.textContent='SALIENDO...';btn.disabled=true;}
-  try{ await sb.auth.signOut({scope:'local'}); }catch(e){}
+function doSignOut(){
+  sb.auth.signOut({scope:'local'}).catch(()=>{});
   currentUser=null;
   updateAuthUI();
   closeAuth();
