@@ -725,7 +725,12 @@ function updateAuthUI(){
   }
 }
 
-function openAuth(){
+async function openAuth(){
+  // recheck session in case onAuthStateChange hasn't fired yet
+  if(!currentUser){
+    const{data}=await sb.auth.getSession();
+    if(data?.session?.user){ currentUser=data.session.user; updateAuthUI(); }
+  }
   document.getElementById('auth-modal').classList.remove('hidden');
   document.getElementById('auth-step-email').style.display=currentUser?'none':'block';
   document.getElementById('auth-step-sent').style.display='none';
@@ -756,7 +761,9 @@ async function sendMagicLink(){
 }
 
 async function doSignOut(){
-  await sb.auth.signOut();
+  try{ await sb.auth.signOut(); }catch(e){}
+  currentUser=null;
+  updateAuthUI();
   closeAuth();
 }
 </script>
