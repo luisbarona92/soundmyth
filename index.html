@@ -238,17 +238,17 @@ button:focus{outline:none;}
     <!-- SOURCES -->
     <div class="sources-strip">
       <span class="sources-label">FUENTES</span>
-      <div class="source-pill"><div class="source-dot"></div><span class="source-name">Resident Advisor</span></div>
-      <div class="source-pill"><div class="source-dot"></div><span class="source-name">Dice.fm</span></div>
       <div class="source-pill"><div class="source-dot"></div><span class="source-name">Bandsintown</span></div>
-      <div class="source-pill"><div class="source-dot"></div><span class="source-name">Songkick</span></div>
+      <div class="source-pill"><div class="source-dot" style="background:#555;animation:none;"></div><span class="source-name">Resident Advisor</span></div>
+      <div class="source-pill"><div class="source-dot" style="background:#555;animation:none;"></div><span class="source-name">Songkick</span></div>
     </div>
 
     <!-- STATS -->
     <div class="home-stats">
-      <div class="stat-cell"><div class="stat-num" id="stat-events">13</div><div class="stat-lbl">EVENTOS</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-cities">8</div><div class="stat-lbl">CIUDADES</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-djs">24</div><div class="stat-lbl">DJS</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-events">—</div><div class="stat-lbl">EVENTOS</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-countries">—</div><div class="stat-lbl">PAÍSES</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-cities">—</div><div class="stat-lbl">CIUDADES</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-djs">—</div><div class="stat-lbl">DJS</div></div>
     </div>
 
     <!-- PRÓXIMOS TOP -->
@@ -305,9 +305,19 @@ button:focus{outline:none;}
         <button id="mode-dj-btn" onclick="setMode('dj')" style="flex:1;padding:10px;background:transparent;color:#555;border:none;font-size:11px;letter-spacing:1.5px;font-weight:400;cursor:pointer;font-family:inherit;">DJ / ARTISTA</button>
       </div>
       <div id="mode-city">
-        <div class="section-label" style="margin-bottom:14px;">¿A DÓNDE VAS?</div>
-        <input type="text" id="city-search" class="search-input" style="width:100%;margin-bottom:16px;" placeholder="Busca una ciudad..." oninput="renderCities()"/>
-        <div id="city-list"></div>
+        <!-- Paso A: selección de país -->
+        <div id="country-view">
+          <div class="section-label" style="margin-bottom:14px;">¿A QUÉ PAÍS VAS?</div>
+          <input type="text" id="country-search" class="search-input" style="width:100%;margin-bottom:16px;" placeholder="Busca un país..." oninput="renderCountries()"/>
+          <div id="country-list"></div>
+        </div>
+        <!-- Paso B: selección de ciudad (tras elegir país) -->
+        <div id="city-view" style="display:none;">
+          <button onclick="clearCountry()" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:#555;font-size:10px;cursor:pointer;font-family:inherit;letter-spacing:1.5px;margin-bottom:16px;padding:0;">‹ TODOS LOS PAÍSES</button>
+          <div class="section-label" style="margin-bottom:14px;" id="city-view-label">¿A QUÉ CIUDAD VAS?</div>
+          <input type="text" id="city-search" class="search-input" style="width:100%;margin-bottom:16px;" placeholder="Busca una ciudad..." oninput="renderCities()"/>
+          <div id="city-list"></div>
+        </div>
       </div>
       <div id="mode-dj" style="display:none;">
         <div class="section-label" style="margin-bottom:14px;">¿A QUÉ DJ QUIERES VER?</div>
@@ -365,7 +375,7 @@ button:focus{outline:none;}
     <div id="det-lineup"></div>
     <div class="tags" id="det-tags"></div>
     <div class="detail-actions">
-      <a id="det-ticket" href="#" target="_blank" class="ticket-btn">TICKETS EN RA →</a>
+      <a id="det-ticket" href="#" target="_blank" class="ticket-btn">VER TICKETS →</a>
       <button id="det-save" class="save-btn-det" onclick="toggleDetailSave()">♡</button>
     </div>
   </div>
@@ -406,11 +416,30 @@ button:focus{outline:none;}
 <script>
 let EVENTS=[];
 
-const FLAGS={HU:"🇭🇺",DE:"🇩🇪",ES:"🇪🇸",NL:"🇳🇱",GB:"🇬🇧",US:"🇺🇸",JP:"🇯🇵"};
+// Flags: soporta códigos 2 letras (eventos manuales) y nombres completos (Bandsintown)
+const FLAGS={
+  // Códigos legacy
+  'US':'🇺🇸','GB':'🇬🇧','DE':'🇩🇪','ES':'🇪🇸','NL':'🇳🇱','HU':'🇭🇺','JP':'🇯🇵',
+  // Nombres completos
+  'United States':'🇺🇸','Spain':'🇪🇸','United Kingdom':'🇬🇧','Germany':'🇩🇪',
+  'France':'🇫🇷','Netherlands':'🇳🇱','Canada':'🇨🇦','Belgium':'🇧🇪','Italy':'🇮🇹',
+  'Mexico':'🇲🇽','Poland':'🇵🇱','Hungary':'🇭🇺','Portugal':'🇵🇹','Switzerland':'🇨🇭',
+  'Austria':'🇦🇹','Croatia':'🇭🇷','Denmark':'🇩🇰','India':'🇮🇳','Sweden':'🇸🇪',
+  'South Africa':'🇿🇦','Brazil':'🇧🇷','Argentina':'🇦🇷','Czechia':'🇨🇿',
+  'Czech Republic':'🇨🇿','Malta':'🇲🇹','Colombia':'🇨🇴','United Arab Emirates':'🇦🇪',
+  'Finland':'🇫🇮','Norway':'🇳🇴','Japan':'🇯🇵','Thailand':'🇹🇭','Chile':'🇨🇱',
+  'Ireland':'🇮🇪','Romania':'🇷🇴','Australia':'🇦🇺','Russia':'🇷🇺','Indonesia':'🇮🇩',
+  'Greece':'🇬🇷','Latvia':'🇱🇻','Singapore':'🇸🇬','China':'🇨🇳','Serbia':'🇷🇸',
+  'Cyprus':'🇨🇾','Turkey':'🇹🇷','New Zealand':'🇳🇿','Slovakia':'🇸🇰',
+  'North Macedonia':'🇲🇰','Philippines':'🇵🇭','Costa Rica':'🇨🇷','Luxembourg':'🇱🇺',
+  'Belarus':'🇧🇾','Peru':'🇵🇪','Lithuania':'🇱🇹','Lebanon':'🇱🇧','Egypt':'🇪🇬',
+  'Albania':'🇦🇱','Guatemala':'🇬🇹','South Korea':'🇰🇷','Estonia':'🇪🇪','Iceland':'🇮🇸',
+  'Kyrgyzstan':'🇰🇬',
+};
 const MONTHS=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-let ALL_CITIES=[], ALL_DJS=[];
+let ALL_CITIES=[], ALL_DJS=[], ALL_COUNTRIES=[];
 
-let saved=JSON.parse(localStorage.getItem('sm_saved')||'[]'), selCity=null, selMonth=null, selDJ=null, currentStep=0, detailEv=null, searchMode='city';
+let saved=JSON.parse(localStorage.getItem('sm_saved')||'[]'), selCity=null, selCountry=null, selMonth=null, selDJ=null, currentStep=0, detailEv=null, searchMode='city';
 
 // ── SUPABASE ───────────────────────────────────────────────────────────────────
 const SB_URL='https://ekcwqesvujqsyuykqtap.supabase.co';
@@ -434,14 +463,18 @@ setTimeout(()=>{
 
 // ── HOME FEATURED ─────────────────────────────────────────────────────────────
 const DJ_SPOTLIGHT={
-  name:"Charlotte de Witte",
-  sub:"Techno · Bélgica · Residente Drumcode",
+  name:"Lilly Palmer",
+  sub:"Techno · Alemania · Drumcode",
   img:"https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?w=600&q=80",
-  eventsCount: ()=>EVENTS.filter(e=>e.djs.includes("Charlotte de Witte")).length,
+  eventsCount:()=>EVENTS.filter(e=>e.djs.some(d=>d.toLowerCase().includes('lilly palmer'))).length,
 };
 
 function renderFeatured(){
-  const top=[...EVENTS].sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,5);
+  // Priorizar eventos que tienen imagen de artista
+  const withImg=EVENTS.filter(e=>e.img);
+  const withoutImg=EVENTS.filter(e=>!e.img);
+  const pool=[...withImg,...withoutImg];
+  const top=pool.slice(0,5);
   document.getElementById('home-featured').innerHTML=top.map(ev=>{
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
@@ -488,11 +521,16 @@ async function loadEvents(){
   }
   ALL_CITIES=[...new Set(EVENTS.map(e=>e.city))].sort();
   ALL_DJS=[...new Set(EVENTS.flatMap(e=>e.djs))].sort();
+  // Países ordenados por número de eventos (los más grandes primero)
+  ALL_COUNTRIES=[...new Set(EVENTS.map(e=>e.country).filter(Boolean))].sort(
+    (a,b)=>EVENTS.filter(e=>e.country===b).length - EVENTS.filter(e=>e.country===a).length
+  );
   document.getElementById('event-count-label').textContent=`${EVENTS.length} EVENTOS`;
   document.getElementById('stat-events').textContent=EVENTS.length;
+  document.getElementById('stat-countries').textContent=ALL_COUNTRIES.length;
   document.getElementById('stat-cities').textContent=ALL_CITIES.length;
   document.getElementById('stat-djs').textContent=ALL_DJS.length;
-  renderCities();
+  renderCountries();
   renderFeatured();
 }
 
@@ -527,7 +565,9 @@ function setMode(mode){
   const cb=document.getElementById('mode-city-btn'), db=document.getElementById('mode-dj-btn');
   cb.style.cssText+=`;background:${mode==='city'?'#fff':'transparent'};color:${mode==='city'?'#000':'#555'};font-weight:${mode==='city'?700:400}`;
   db.style.cssText+=`;background:${mode==='dj'?'#fff':'transparent'};color:${mode==='dj'?'#000':'#555'};font-weight:${mode==='dj'?700:400}`;
-  if(mode==='dj') renderDJs(); else renderCities();
+  if(mode==='dj') renderDJs();
+  else if(selCountry) renderCities();
+  else renderCountries();
 }
 
 // ── PLAN STEPS ────────────────────────────────────────────────────────────────
@@ -537,18 +577,60 @@ function goStep(s){
   document.getElementById('step-city').style.display=s===0?'block':'none';
   document.getElementById('step-month').style.display=s===1?'block':'none';
   document.getElementById('step-events').style.display=s===2?'block':'none';
+  // Volver al paso 0 resetea la selección de país
+  if(s===0){
+    selCountry=null;
+    document.getElementById('country-view').style.display='block';
+    document.getElementById('city-view').style.display='none';
+    renderCountries();
+  }
   document.getElementById('bc-city').className='bc-btn'+(s===0?' active':'');
   document.getElementById('bc-month').className='bc-btn'+(s>=1?' active':'');
   document.getElementById('bc-month').textContent=selCity||'Mes';
   document.getElementById('bc-events').className='bc-btn'+(s===2?' active':'');
 }
 
+// ── PAÍS DRILL-DOWN ───────────────────────────────────────────────────────────
+function countryCount(c){return EVENTS.filter(e=>e.country===c).length;}
+
+function renderCountries(){
+  const q=(document.getElementById('country-search')||{value:''}).value.toLowerCase();
+  const countries=ALL_COUNTRIES.filter(c=>c.toLowerCase().includes(q));
+  document.getElementById('country-list').innerHTML=countries.map(country=>{
+    const cnt=countryCount(country);
+    const cities=[...new Set(EVENTS.filter(e=>e.country===country).map(e=>e.city))].length;
+    return`<button class="city-btn" onclick="selectCountry(${JSON.stringify(country)})">
+      <span style="font-size:20px">${FLAGS[country]||'🌐'}</span>
+      <div style="flex:1;text-align:left"><div class="city-name">${country}</div><div class="city-country">${cities} ciudad${cities!==1?'es':''}</div></div>
+      <span class="city-count">${cnt} eventos</span>
+      <span class="city-arrow">›</span>
+    </button>`;
+  }).join('');
+}
+
+function selectCountry(country){
+  selCountry=country;
+  document.getElementById('country-view').style.display='none';
+  document.getElementById('city-view').style.display='block';
+  document.getElementById('city-view-label').textContent=`CIUDADES EN ${country.toUpperCase()}`;
+  const cs=document.getElementById('city-search'); if(cs) cs.value='';
+  renderCities();
+}
+
+function clearCountry(){
+  selCountry=null;
+  document.getElementById('city-view').style.display='none';
+  document.getElementById('country-view').style.display='block';
+  renderCountries();
+}
+
 function renderCities(){
   const q=(document.getElementById('city-search')||{value:''}).value.toLowerCase();
-  const cities=ALL_CITIES.filter(c=>c.toLowerCase().includes(q));
+  const filtered=EVENTS.filter(e=>!selCountry||e.country===selCountry);
+  const cities=[...new Set(filtered.map(e=>e.city))].sort().filter(c=>c.toLowerCase().includes(q));
   document.getElementById('city-list').innerHTML=cities.map(city=>{
     const ev=EVENTS.find(e=>e.city===city);
-    return`<button class="city-btn" onclick="selectCity('${city}')">
+    return`<button class="city-btn" onclick="selectCity(${JSON.stringify(city)})">
       <span style="font-size:20px">${FLAGS[ev?.country]||'🌐'}</span>
       <div style="flex:1;text-align:left"><div class="city-name">${city}</div><div class="city-country">${ev?.country||''}</div></div>
       <span class="city-count">${cityCount(city)} eventos</span>
@@ -559,17 +641,28 @@ function renderCities(){
 
 function renderDJs(){
   const q=(document.getElementById('dj-search')||{value:''}).value.toLowerCase();
-  const djs=ALL_DJS.filter(d=>d.toLowerCase().includes(q));
+  let djs;
+  if(q){
+    djs=ALL_DJS.filter(d=>d.toLowerCase().includes(q));
+  } else {
+    // Sin búsqueda: mostrar top 30 por número de eventos
+    djs=[...ALL_DJS].sort((a,b)=>
+      EVENTS.filter(e=>e.djs.includes(b)).length - EVENTS.filter(e=>e.djs.includes(a)).length
+    ).slice(0,30);
+  }
+  const hint=!q?`<div style="color:#2a2a2a;font-size:10px;letter-spacing:1px;text-align:center;padding:12px 0;">↑ TOP 30 · Escribe para buscar entre ${ALL_DJS.length} DJs</div>`:'';
   document.getElementById('dj-list').innerHTML=djs.map(dj=>{
     const evs=EVENTS.filter(e=>e.djs.includes(dj));
-    const cities=[...new Set(evs.map(e=>e.city))];
-    return`<button class="city-btn" onclick="selectDJ('${dj.replace(/'/g,"\\'")}')">
+    const countries=[...new Set(evs.map(e=>e.country))];
+    const flags=countries.slice(0,4).map(c=>FLAGS[c]||'').join('');
+    const extraCountries=countries.length>4?` +${countries.length-4}`:' ';
+    return`<button class="city-btn" onclick="selectDJ(${JSON.stringify(dj)})">
       <span style="font-size:20px">🎛</span>
-      <div style="flex:1;text-align:left"><div class="city-name">${dj}</div><div class="city-country">${cities.join(', ')}</div></div>
-      <span class="city-count">${evs.length} evento${evs.length>1?'s':''}</span>
+      <div style="flex:1;text-align:left"><div class="city-name">${dj}</div><div class="city-country">${flags}${extraCountries}· ${evs.length} ev.</div></div>
+      <span class="city-count">${countries.length} país${countries.length!==1?'es':''}</span>
       <span class="city-arrow">›</span>
     </button>`;
-  }).join('');
+  }).join('')+hint;
 }
 
 function selectCity(city){
