@@ -72,7 +72,7 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'He
 .ev-card-h-price{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.65);border:1px solid #222;border-radius:4px;padding:3px 7px;color:#fff;font-size:10px;font-weight:700;}
 
 /* DJ SPOTLIGHT */
-.dj-spotlight{margin:0 20px 24px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;}
+.dj-spotlight{margin:0 20px 24px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;min-height:200px;background:#080808;}
 .dj-spotlight img{width:100%;height:200px;object-fit:cover;object-position:top;filter:brightness(0.35);display:block;}
 .dj-spotlight-grad{position:absolute;inset:0;background:linear-gradient(105deg,rgba(0,0,0,0.85) 40%,transparent 100%);}
 .dj-spotlight-body{position:absolute;inset:0;padding:24px 20px;display:flex;flex-direction:column;justify-content:flex-end;}
@@ -478,11 +478,11 @@ function renderFeatured(){
   document.getElementById('home-featured').innerHTML=top.map(ev=>{
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
-    return`<div class="ev-card-h" onclick="openDetail(${JSON.stringify(ev.id)})">
+    return`<div class="ev-card-h" onclick='openDetail(${JSON.stringify(ev.id)})'>
       <img src="${ev.img}" alt="" onerror="this.style.display='none'"/>
       <div class="ev-card-h-grad"></div>
       <span class="ev-card-h-price">${ev.price}</span>
-      <button class="ev-card-h-save${isSaved?' saved':''}" onclick="event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})">${isSaved?'♥':'♡'}</button>
+      <button class="ev-card-h-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
       <div class="ev-card-h-body">
         <div class="ev-card-h-genre">${ev.genre.toUpperCase()} · ${FLAGS[ev.country]} ${ev.city.toUpperCase()}</div>
         <div class="ev-card-h-name">${ev.name}</div>
@@ -525,7 +525,7 @@ async function loadEvents(){
     EVENTS=data
       .filter(e=>EUROPE.has(e.country))   // solo eventos europeos
       .map(e=>({
-        id:e.id, name:e.name, venue:e.venue, city:e.city, country:e.country,
+        id:e.id, name:e.name, venue:e.venue||'', city:e.city||'', country:e.country,
         date:e.date, djs:e.djs||[], genre:e.genre||'', tags:e.tags||[],
         price:e.price||'', ticket:e.ticket_url||'#', img:e.img_url||''
       }));
@@ -610,7 +610,7 @@ function renderCountries(){
   document.getElementById('country-list').innerHTML=countries.map(country=>{
     const cnt=countryCount(country);
     const cities=[...new Set(EVENTS.filter(e=>e.country===country).map(e=>e.city))].length;
-    return`<button class="city-btn" onclick="selectCountry(${JSON.stringify(country)})">
+    return`<button class="city-btn" onclick='selectCountry(${JSON.stringify(country)})'>
       <span style="font-size:20px">${FLAGS[country]||'🌐'}</span>
       <div style="flex:1;text-align:left"><div class="city-name">${country}</div><div class="city-country">${cities} ciudad${cities!==1?'es':''}</div></div>
       <span class="city-count">${cnt} eventos</span>
@@ -641,7 +641,7 @@ function renderCities(){
   const cities=[...new Set(filtered.map(e=>e.city))].sort().filter(c=>c.toLowerCase().includes(q));
   document.getElementById('city-list').innerHTML=cities.map(city=>{
     const ev=EVENTS.find(e=>e.city===city);
-    return`<button class="city-btn" onclick="selectCity(${JSON.stringify(city)})">
+    return`<button class="city-btn" onclick='selectCity(${JSON.stringify(city)})'>
       <span style="font-size:20px">${FLAGS[ev?.country]||'🌐'}</span>
       <div style="flex:1;text-align:left"><div class="city-name">${city}</div><div class="city-country">${ev?.country||''}</div></div>
       <span class="city-count">${cityCount(city)} eventos</span>
@@ -667,7 +667,7 @@ function renderDJs(){
     const countries=[...new Set(evs.map(e=>e.country))];
     const flags=countries.slice(0,4).map(c=>FLAGS[c]||'').join('');
     const extraCountries=countries.length>4?` +${countries.length-4}`:' ';
-    return`<button class="city-btn" onclick="selectDJ(${JSON.stringify(dj)})">
+    return`<button class="city-btn" onclick='selectDJ(${JSON.stringify(dj)})'>
       <span style="font-size:20px">🎛</span>
       <div style="flex:1;text-align:left"><div class="city-name">${dj}</div><div class="city-country">${flags}${extraCountries}· ${evs.length} ev.</div></div>
       <span class="city-count">${countries.length} país${countries.length!==1?'es':''}</span>
@@ -721,7 +721,7 @@ function selectDJ(dj){
 function eventRowHTML(ev){
   const{day,mon}=fmtDate(ev.date);
   const isSaved=saved.includes(ev.id);
-  return`<div class="event-row" onclick="openDetail(${JSON.stringify(ev.id)})">
+  return`<div class="event-row" onclick='openDetail(${JSON.stringify(ev.id)})'>
     <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
     <div class="ev-divider"></div>
     <div class="ev-info">
@@ -730,7 +730,7 @@ function eventRowHTML(ev){
     </div>
     <div class="ev-right">
       <div><div class="ev-price">${ev.price}</div><div class="ev-genre">${ev.genre}</div></div>
-      <button class="ev-save${isSaved?' saved':''}" onclick="event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})">${isSaved?'♥':'♡'}</button>
+      <button class="ev-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
     </div>
   </div>`;
 }
