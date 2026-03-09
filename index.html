@@ -516,7 +516,7 @@ function renderFeatured(){
   };
 }
 
-// ── DJ MAG TOP 30 ORDER ───────────────────────────────────────────────────────
+// ── CURATED DJ LIST (404 artists, ranked) ────────────────────────────────────
 const DJ_MAG_ORDER=[
   'David Guetta','Martin Garrix','Alok','Dimitri Vegas & Like Mike','Armin Van Buuren',
   'Timmy Trumpet','FISHER','Afrojack','Charlotte De Witte','Anyma',
@@ -524,6 +524,81 @@ const DJ_MAG_ORDER=[
   'Calvin Harris','Black Coffee','W&W','Lost Frequencies','Keinemusik',
   'Tiësto','Reinier Zonneveld','KSHMR','Alan Walker','Carl Cox',
   'Oliver Heldens','Jamie Jones','R3hab','Nicky Romero','Claptone',
+  'Skrillex','Vini Vici','Fred Again..','Swedish House Mafia','Joel Corry',
+  'Indira Paganotto','Eric Prydz','Amelie Lens','Paul van Dyk','DJ Snake',
+  'Dom Dolla','Marshmello','The Martinez Brothers','Zedd','Bassjackers',
+  'John Summit','Quintino','Michael Bibi','Boris Brejcha','Korolova',
+  'Alesso','James Hype','Maddix','HUGEL','Solomun',
+  'Mochakk','Lilly Palmer','Nora En Pure','ATB','Deborah De Luca',
+  'Above & Beyond','Sara Landry','Nervo','Sub Zero Project','Kölsch',
+  'Lucas & Steve','Nico Moreno','GORDO','PAWSA','The Chainsmokers',
+  'Liu','Mike Williams','ARTBAT','KAAZE','Miss Monique',
+  'Burak Yeter','Mau P','Le Twins','I Hate Models','Marnik',
+  'Chris Stussy','Deadmau5','WUKONG','Fedde Le Grand','Ferry Corsten',
+  'Plastik Funk','DubVision','B Jones','Giuseppe Ottaviani','Cuebrick',
+  'Mariana Bo','MEDUZA','Fantasm','VINAI','Chris Lake',
+  'Faustix','Honey Dijon','Nils Van Zandt','Topic','Marlon Hoffstadt',
+  'Adam Beyer','Richie Hawtin','Nina Kraviz','Jeff Mills','Dave Clarke',
+  'Chris Liebing','Dax J','DVS1','Paula Temple','Surgeon',
+  'SPFDJ','Héctor Oaks','Trym','Ben Sims','Speedy J',
+  'Phase Fatale','Marcel Dettmann','Norman Nodge','Enrico Sangiuliano','Sam Paganini',
+  'Alan Fitzpatrick','Joris Voorn','Pan-Pot','Kaiserdisco','Rebekah',
+  'Len Faki','Etapp Kyle','KiNK','Setaoc Mass','Dense & Pika',
+  'Answer Code Request','Slam','Popof','Truncate','Drumcell',
+  'Mattia Trani','Blawan','DJ Stingray 313','Alignment','Pfirter',
+  'Sleeparchive','Klangkuenstler','Anfisa Letyago','Layton Giordani','Dj Rush',
+  'Luke Slater','Stanny Franssen','Cosmic Boys','Kobosil','Kerri Chandler',
+  'Larry Heard','Joe Claussell','Danny Tenaglia','DJ Harvey','Move D',
+  'Hunee','Âme','Dixon','Ricardo Villalobos','Roman Flügel',
+  'Motor City Drum Ensemble','DJ Tennis','Jennifer Cardini','Apollonia','Zip',
+  'San Proper','Adiel','wAFF','Trikk','Denis Sulta',
+  'Huxley','Subb-an','Nathan Barato','Nicolas Masseyeff','Justin Martin',
+  'Midland','Eris Drew','Craig Richards','Tom Trago','Butane',
+  'Isolée','Golf Clap','Youandewan','Marco Carola','Luciano',
+  'Maceo Plex','Themba','Enoo Napa','Culoe De Song','Moojo',
+  'Blond:ish','Matador','Scuba','Special Request','Objekt',
+  'George Fitzgerald','Paul Oakenfold','Sasha','John Digweed','Hernan Cattaneo',
+  'Nic Fanciulli','Astrix','Infected Mushroom','Ace Ventura','GMS',
+  'Blastoyz','Liquid Soul','Captain Hook','Talpa','Neelix',
+  'Earthling','Talamasca','Yahel','Laurent Garnier','Cosmic Gate',
+  'Seven Lions','Tritonal','Sultan + Shepard','Kaskade','Matt Fax',
+  'Andy C','Shy FX','Chase & Status','Noisia','Netsky',
+  'Sub Focus','Logistics','Calyx & Teebee','Matrix & Futurebound','DC Breaks',
+  'Mefjus','Camo & Krooked','Alix Perez','Goldie','LTJ Bukem',
+  'Pendulum','DJ Marky','Teddy Killerz','Maztek','Zero T',
+  'S.P.Y','Crissy Criss','Friction','Headhunterz','Brennan Heart',
+  'Noisecontrollers','Wildstylez','Da Tweekaz','D-Block & S-te-Fan','Atmozfears',
+  'Hard Driver','Sound Rush','Adaro','Psyko Punkz','Code Black',
+  'Radical Redemption','Rejecta','Warface','Phuture Noize','Ran-D',
+  'Coone','Chain Reaction','Max Enforcer','Frequencerz','Project One',
+  'Alpha²','Excision','Flux Pavilion','Doctor P','12th Planet',
+  'Rusko','Feed Me','Valentino Khan','Dillon Francis','GG Magree',
+  'Caspa','Virtual Riot','Barely Alive','Space Laces','Must Die!',
+  'Ben Böhmer','Innellea','Eli & Fur','Bicep','Maribou State',
+  'Jon Hopkins','Four Tet','Floating Points','Bonobo','Caribou',
+  'Nicolas Jaar','DJ Koze','Todd Terje','Lindstrøm','Prins Thomas',
+  'Röyksopp','Mount Kimbie','Ben UFO','Mall Grab','Joy Orbison',
+  'Daniel Avery','Helena Hauff','Lorenzo Senni','Burial','Actress',
+  'Diplo','Major Lazer','Kygo','Martin Jensen','Mesto',
+  'Showtek','Blasterjaxx','Jay Hardway','Thomas Gold','BT',
+  'Dada Life','Dyro','Deniz Koyu','Sander van Doorn','Dash Berlin',
+  'Skream','Benga','Plastician','Wiley','MJ Cole',
+  'Todd Edwards','Flume','RL Grime','Baauer','Flosstradamus',
+  'What So Not','Odesza','Larry Heard (Mr Fingers)','DJ Pierre','Frankie Knuckles',
+  'Larry Levan','Dj Kent','Atmos Blaq','Auntie Flo','Awesome Tapes From Africa',
+  'Dj Lag','Plastikman','Minus label artists','Akufen','Mathew Jonson',
+  'Extrawelt','Robert Henke','Moderat','Apparat','Trentemøller',
+  'Nils Frahm','Olafur Arnalds','Stimming','Tale Of Us','Adriatique',
+  'Agents Of Time','Patrice Bäumel','Stephan Bodzin','Hvob','Massano',
+  'Camelphat','Gorillaz','Disclosure','Overmono','Shackleton',
+  'Martyn','Hessle Audio','Pearson Sound','Ø [Phase]','Paula Tape',
+  'DJ Shadow','Dj Premier','The Blessed Madonna','Kraak & Smaak','Gerd Janson',
+  'The Black Madonna','TSHA','DJ Stingray','Identified Patient','Finnebassen',
+  'Franky Rizardo','Cari Lekebusch','Green Velvet','Traumer','Mr. G',
+  'Stacey Pullen','Audio','Current Value','Fourward','Spor',
+  'Black Sun Empire','Nymfo','Dj Hype','Dj Randall','Dj Zinc',
+  'Bryan Gee','Makoto','Nu:Tone','Paul SG','Telekinesis',
+  'Break','Om Unit','Icicle','Dj Hazard',
 ];
 
 // ── DJ NATIVE COUNTRY FLAGS ───────────────────────────────────────────────────
@@ -734,7 +809,7 @@ async function loadEvents(){
   document.getElementById('stat-events').textContent=EVENTS.length;
   document.getElementById('stat-countries').textContent=ALL_COUNTRIES.length;
   document.getElementById('stat-cities').textContent=ALL_CITIES.length;
-  document.getElementById('stat-djs').textContent=ALL_DJS.length;
+  document.getElementById('stat-djs').textContent=DJ_MAG_ORDER.filter(dj=>ALL_DJS.some(d=>d.toLowerCase()===dj.toLowerCase())).length;
   renderCountries();
   renderFeatured();
 }
