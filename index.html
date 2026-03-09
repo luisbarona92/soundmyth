@@ -518,6 +518,25 @@ function renderFeatured(){
   };
 }
 
+// ── ISO 2-LETTER → FULL COUNTRY NAME ──────────────────────────────────────────
+const COUNTRY_ISO={
+  'GB':'United Kingdom','UK':'United Kingdom',
+  'DE':'Germany','FR':'France','ES':'Spain','NL':'Netherlands',
+  'BE':'Belgium','IT':'Italy','PL':'Poland','PT':'Portugal',
+  'CH':'Switzerland','AT':'Austria','HR':'Croatia','DK':'Denmark',
+  'SE':'Sweden','CZ':'Czechia','MT':'Malta','FI':'Finland',
+  'NO':'Norway','RO':'Romania','IE':'Ireland','GR':'Greece',
+  'LV':'Latvia','RS':'Serbia','CY':'Cyprus','LU':'Luxembourg',
+  'LT':'Lithuania','EE':'Estonia','IS':'Iceland','AL':'Albania',
+  'MK':'North Macedonia','BY':'Belarus','SK':'Slovakia','RU':'Russia',
+  'TR':'Turkey','HU':'Hungary','UA':'Ukraine','BG':'Bulgaria',
+  'SI':'Slovenia','BA':'Bosnia and Herzegovina','XK':'Kosovo',
+  'ME':'Montenegro','MD':'Moldova','AM':'Armenia','GE':'Georgia',
+  'AZ':'Azerbaijan','KZ':'Kazakhstan','UZ':'Uzbekistan',
+  'US':'United States','CA':'Canada','AU':'Australia','JP':'Japan',
+};
+function normalizeCountry(c){return COUNTRY_ISO[c]||c;}
+
 // ── EUROPEAN COUNTRIES FILTER ─────────────────────────────────────────────────
 const EUROPE=new Set(['Spain','United Kingdom','Germany','France','Netherlands',
   'Belgium','Italy','Poland','Portugal','Switzerland','Austria','Croatia','Denmark',
@@ -530,9 +549,10 @@ const EUROPE=new Set(['Spain','United Kingdom','Germany','France','Netherlands',
 // ── LOAD EVENTS FROM SUPABASE ─────────────────────────────────────────────────
 async function loadEvents(){
   const today=new Date().toISOString().split('T')[0];
-  const{data,error}=await sb.from('events').select('*').gte('date',today).order('date');
+  const{data,error}=await sb.from('events').select('*').gte('date',today).order('date').limit(5000);
   if(data&&data.length>0){
     EVENTS=data
+      .map(e=>({...e, country:normalizeCountry(e.country||'')}))  // normalise ISO codes
       .filter(e=>EUROPE.has(e.country))   // solo eventos europeos
       .map(e=>({
         id:e.id, name:e.name, venue:e.venue||'', city:e.city||'', country:e.country,
