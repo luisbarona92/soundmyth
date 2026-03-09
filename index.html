@@ -370,7 +370,6 @@ button:focus{outline:none;}
     <div class="detail-stats">
       <div class="stat-box"><div class="stat-ico">📅</div><div class="stat-val" id="det-date"></div></div>
       <div class="stat-box"><div class="stat-ico">⏳</div><div class="stat-val" id="det-days"></div></div>
-      <div class="stat-box"><div class="stat-ico">🎫</div><div class="stat-val" id="det-price"></div></div>
     </div>
     <div class="lineup-label">LINE-UP</div>
     <div id="det-lineup"></div>
@@ -489,9 +488,8 @@ function renderFeatured(){
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
     return`<div class="ev-card-h" onclick='openDetail(${JSON.stringify(ev.id)})'>
-      <img src="${ev.img}" alt="" onerror="this.style.display='none'"/>
+      <img src="${countryImg(ev.country)}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
       <div class="ev-card-h-grad"></div>
-      <span class="ev-card-h-price">${ev.price}</span>
       <button class="ev-card-h-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
       <div class="ev-card-h-body">
         <div class="ev-card-h-genre">${ev.genre.toUpperCase()} · ${FLAGS[ev.country]} ${ev.city.toUpperCase()}</div>
@@ -544,6 +542,62 @@ const DJ_NATIONALITY={
   'Dj Koze':'🇩🇪','Floating Points':'🇬🇧','Four Tet':'🇬🇧','Ben Böhmer':'🇩🇪',
   'Moderat':'🇩🇪','Bonobo':'🇬🇧','Jon Hopkins':'🇬🇧','Nicolas Jaar':'🇺🇸',
 };
+
+// ── COUNTRY IMAGES (Unsplash landmarks) ──────────────────────────────────────
+const COUNTRY_IMG={
+  'United Kingdom':  'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=200&h=130&fit=crop&auto=format',
+  'Germany':         'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=200&h=130&fit=crop&auto=format',
+  'France':          'https://images.unsplash.com/photo-1499856871958-5b9357c8b3f1?w=200&h=130&fit=crop&auto=format',
+  'Spain':           'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=200&h=130&fit=crop&auto=format',
+  'Netherlands':     'https://images.unsplash.com/photo-1468936813738-5cbae1db2f4c?w=200&h=130&fit=crop&auto=format',
+  'Belgium':         'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=200&h=130&fit=crop&auto=format',
+  'Italy':           'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=200&h=130&fit=crop&auto=format',
+  'Poland':          'https://images.unsplash.com/photo-1520350581-2cc79df32fb8?w=200&h=130&fit=crop&auto=format',
+  'Portugal':        'https://images.unsplash.com/photo-1597659840991-fef1ada48509?w=200&h=130&fit=crop&auto=format',
+  'Switzerland':     'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=200&h=130&fit=crop&auto=format',
+  'Austria':         'https://images.unsplash.com/photo-1516550893885-985c836c5628?w=200&h=130&fit=crop&auto=format',
+  'Croatia':         'https://images.unsplash.com/photo-1555993539-1732b0258235?w=200&h=130&fit=crop&auto=format',
+  'Denmark':         'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=200&h=130&fit=crop&auto=format',
+  'Sweden':          'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=200&h=130&fit=crop&auto=format',
+  'Czechia':         'https://images.unsplash.com/photo-1592906209472-a36b1f3782ef?w=200&h=130&fit=crop&auto=format',
+  'Czech Republic':  'https://images.unsplash.com/photo-1592906209472-a36b1f3782ef?w=200&h=130&fit=crop&auto=format',
+  'Malta':           'https://images.unsplash.com/photo-1565073182887-6bcefbe225b1?w=200&h=130&fit=crop&auto=format',
+  'Finland':         'https://images.unsplash.com/photo-1559562010-db2ad38ce9bb?w=200&h=130&fit=crop&auto=format',
+  'Norway':          'https://images.unsplash.com/photo-1520769945061-0a448c463865?w=200&h=130&fit=crop&auto=format',
+  'Romania':         'https://images.unsplash.com/photo-1558642084-fd07fae5282e?w=200&h=130&fit=crop&auto=format',
+  'Ireland':         'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=200&h=130&fit=crop&auto=format',
+  'Greece':          'https://images.unsplash.com/photo-1555993539-1732b0258235?w=200&h=130&fit=crop&auto=format',
+  'Latvia':          'https://images.unsplash.com/photo-1519230819017-2710f8f50edb?w=200&h=130&fit=crop&auto=format',
+  'Hungary':         'https://images.unsplash.com/photo-1609136257232-5e70ba093c14?w=200&h=130&fit=crop&auto=format',
+  'Russia':          'https://images.unsplash.com/photo-1513326738677-b964603b136d?w=200&h=130&fit=crop&auto=format',
+  'Turkey':          'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=200&h=130&fit=crop&auto=format',
+  'Serbia':          'https://images.unsplash.com/photo-1554188572-9d184ca64a1f?w=200&h=130&fit=crop&auto=format',
+  'Cyprus':          'https://images.unsplash.com/photo-1561128290-2cf6a09c7f62?w=200&h=130&fit=crop&auto=format',
+  'United States':   'https://images.unsplash.com/photo-1490644658840-3f2e3f8c5625?w=200&h=130&fit=crop&auto=format',
+  'Canada':          'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=200&h=130&fit=crop&auto=format',
+  'Australia':       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=130&fit=crop&auto=format',
+  'Japan':           'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=200&h=130&fit=crop&auto=format',
+  'Brazil':          'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=200&h=130&fit=crop&auto=format',
+  'Mexico':          'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=200&h=130&fit=crop&auto=format',
+  'Argentina':       'https://images.unsplash.com/photo-1518639192441-8fce0a366e2e?w=200&h=130&fit=crop&auto=format',
+  'Colombia':        'https://images.unsplash.com/photo-1576204735006-a45f7b7c6d8e?w=200&h=130&fit=crop&auto=format',
+  'South Africa':    'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=200&h=130&fit=crop&auto=format',
+  'India':           'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=200&h=130&fit=crop&auto=format',
+  'Singapore':       'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=200&h=130&fit=crop&auto=format',
+  'Thailand':        'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=200&h=130&fit=crop&auto=format',
+  'Indonesia':       'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=200&h=130&fit=crop&auto=format',
+  'China':           'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=200&h=130&fit=crop&auto=format',
+  'Philippines':     'https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=200&h=130&fit=crop&auto=format',
+  'New Zealand':     'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=200&h=130&fit=crop&auto=format',
+  'Chile':           'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=200&h=130&fit=crop&auto=format',
+  'Peru':            'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=200&h=130&fit=crop&auto=format',
+  'Lebanon':         'https://images.unsplash.com/photo-1523207911345-32501502db22?w=200&h=130&fit=crop&auto=format',
+  'Egypt':           'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=200&h=130&fit=crop&auto=format',
+  'South Korea':     'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=200&h=130&fit=crop&auto=format',
+  'United Arab Emirates':'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=200&h=130&fit=crop&auto=format',
+};
+const COUNTRY_IMG_FALLBACK='https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=200&h=130&fit=crop&auto=format';
+function countryImg(country){return COUNTRY_IMG[country]||COUNTRY_IMG_FALLBACK;}
 
 // ── CITY IMAGES (Unsplash) ────────────────────────────────────────────────────
 const CITY_IMG={
@@ -602,6 +656,12 @@ const COUNTRY_ISO={
   'ME':'Montenegro','MD':'Moldova','AM':'Armenia','GE':'Georgia',
   'AZ':'Azerbaijan','KZ':'Kazakhstan','UZ':'Uzbekistan',
   'US':'United States','CA':'Canada','AU':'Australia','JP':'Japan',
+  'BR':'Brazil','MX':'Mexico','AR':'Argentina','CO':'Colombia',
+  'ZA':'South Africa','IN':'India','SG':'Singapore','TH':'Thailand',
+  'ID':'Indonesia','CN':'China','PH':'Philippines','NZ':'New Zealand',
+  'CL':'Chile','PE':'Peru','LB':'Lebanon','EG':'Egypt',
+  'KR':'South Korea','KG':'Kyrgyzstan','AE':'United Arab Emirates',
+  'GT':'Guatemala','CR':'Costa Rica',
 };
 function normalizeCountry(c){return COUNTRY_ISO[c]||c;}
 
@@ -617,9 +677,16 @@ const EUROPE=new Set(['Spain','United Kingdom','Germany','France','Netherlands',
 // ── LOAD EVENTS FROM SUPABASE ─────────────────────────────────────────────────
 async function loadEvents(){
   const today=new Date().toISOString().split('T')[0];
-  const{data,error}=await sb.from('events').select('*').gte('date',today).order('date').limit(5000);
-  if(data&&data.length>0){
-    EVENTS=data
+  let allData=[],from=0;
+  while(true){
+    const{data}=await sb.from('events').select('*').gte('date',today).order('date').range(from,from+999);
+    if(!data||data.length===0) break;
+    allData=allData.concat(data);
+    if(data.length<1000) break;
+    from+=1000;
+  }
+  if(allData.length>0){
+    EVENTS=allData
       .map(e=>({...e, country:normalizeCountry(e.country||'')}))  // normalise ISO codes
       .map(e=>({
         id:e.id, name:e.name, venue:e.venue||'', city:e.city||'', country:e.country,
@@ -836,9 +903,9 @@ function selectDJ(dj){
 function eventRowHTML(ev){
   const{day,mon}=fmtDate(ev.date);
   const isSaved=saved.includes(ev.id);
-  const thumb=ev.img||cityImg(ev.city);
+  const thumb=countryImg(ev.country);
   return`<div class="event-row" onclick='openDetail(${JSON.stringify(ev.id)})'>
-    <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${CITY_IMG_FALLBACK}'"/>
+    <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
     <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
     <div class="ev-divider"></div>
     <div class="ev-info">
@@ -846,7 +913,7 @@ function eventRowHTML(ev){
       <div class="ev-sub">${FLAGS[ev.country]||''} ${ev.city} · ${ev.djs[0]}${ev.djs.length>1?` +${ev.djs.length-1}`:''}</div>
     </div>
     <div class="ev-right">
-      <div><div class="ev-price">${ev.price}</div><div class="ev-genre">${ev.genre}</div></div>
+      <div><div class="ev-genre">${ev.genre}</div></div>
       <button class="ev-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
     </div>
   </div>`;
@@ -881,14 +948,13 @@ function openDetail(id){
   detailEv=ev;
   const{day,mon}=fmtDate(ev.date);
   const days=daysUntil(ev.date);
-  document.getElementById('det-img').src=ev.img;
+  document.getElementById('det-img').src=countryImg(ev.country);
   document.getElementById('det-genre').textContent=`${ev.genre.toUpperCase()} · ${FLAGS[ev.country]||''} ${ev.city.toUpperCase()}`;
   document.getElementById('det-name').textContent=ev.name;
   document.getElementById('det-venue').textContent=ev.venue;
   document.getElementById('det-date').textContent=`${day} ${mon}`;
   document.getElementById('det-days').textContent=days>0?`${days}d`:days===0?'TODAY':'PAST';
-  document.getElementById('det-price').textContent=ev.price;
-  document.getElementById('det-lineup').innerHTML=ev.djs.map(dj=>`<div class="lineup-row"><div class="lineup-ico">🎛</div><span class="lineup-name">${dj}</span></div>`).join('');
+  document.getElementById('det-lineup').innerHTML=ev.djs.map(dj=>`<div class="lineup-row"><div class="lineup-ico">${DJ_NATIONALITY[dj]||'🎛'}</div><span class="lineup-name">${dj}</span></div>`).join('');
   document.getElementById('det-tags').innerHTML=ev.tags.map(t=>`<span class="tag">${t}</span>`).join('');
   document.getElementById('det-ticket').href=ev.ticket;
   const isSaved=saved.includes(ev.id);
