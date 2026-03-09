@@ -357,7 +357,7 @@ button:focus{outline:none;}
 <!-- DETAIL -->
 <div id="detail">
   <div class="detail-hero">
-    <img id="det-img" src="" alt="" onerror="this.style.display='none'"/>
+    <img id="det-img" src="" alt="" onerror="this.onerror=null;this.src=COUNTRY_IMG_HERO_FALLBACK"/>
     <div class="detail-overlay"></div>
     <button class="detail-back" onclick="closeDetail()">← BACK</button>
     <div class="detail-info">
@@ -488,7 +488,7 @@ function renderFeatured(){
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
     return`<div class="ev-card-h" onclick='openDetail(${JSON.stringify(ev.id)})'>
-      <img src="${countryImg(ev.country)}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
+      <img src="${ev.img||countryImg(ev.country)}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
       <div class="ev-card-h-grad"></div>
       <button class="ev-card-h-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
       <div class="ev-card-h-body">
@@ -542,6 +542,14 @@ const DJ_NATIONALITY={
   'Dj Koze':'🇩🇪','Floating Points':'🇬🇧','Four Tet':'🇬🇧','Ben Böhmer':'🇩🇪',
   'Moderat':'🇩🇪','Bonobo':'🇬🇧','Jon Hopkins':'🇬🇧','Nicolas Jaar':'🇺🇸',
 };
+
+// ── DJ FLAG LOOKUP (case-insensitive) ─────────────────────────────────────────
+function djFlag(name){
+  if(DJ_NATIONALITY[name]) return DJ_NATIONALITY[name];
+  // Try Title Case (handles scrapers that return lowercase like "alok")
+  const titled=name.replace(/\b\w/g,c=>c.toUpperCase());
+  return DJ_NATIONALITY[titled]||'🎛';
+}
 
 // ── COUNTRY IMAGES (Unsplash landmarks) ──────────────────────────────────────
 const COUNTRY_IMG={
@@ -597,7 +605,12 @@ const COUNTRY_IMG={
   'United Arab Emirates':'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=200&h=130&fit=crop&auto=format',
 };
 const COUNTRY_IMG_FALLBACK='https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=200&h=130&fit=crop&auto=format';
+const COUNTRY_IMG_HERO_FALLBACK='https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=400&fit=crop&auto=format';
 function countryImg(country){return COUNTRY_IMG[country]||COUNTRY_IMG_FALLBACK;}
+function countryImgHero(country){
+  const base=(COUNTRY_IMG[country]||COUNTRY_IMG_FALLBACK).replace(/\?.*$/,'');
+  return base+'?w=800&h=400&fit=crop&auto=format';
+}
 
 // ── CITY IMAGES (Unsplash) ────────────────────────────────────────────────────
 const CITY_IMG={
@@ -673,6 +686,25 @@ const EUROPE=new Set(['Spain','United Kingdom','Germany','France','Netherlands',
   'Albania','North Macedonia','Belarus','Slovakia','Russia','Turkey','Hungary',
   'Ukraine','Bulgaria','Slovenia','Bosnia and Herzegovina','Kosovo','Montenegro',
   'Moldova','Armenia','Georgia','Azerbaijan','Kazakhstan','Uzbekistan']);
+
+// ── EVENT GROUPING (merge same festival split into per-DJ rows) ───────────────
+const MERGED_MAP=new Map(); // id → merged event object (populated by groupEvents)
+function groupEvents(events){
+  MERGED_MAP.clear();
+  const keys=new Map();
+  for(const ev of events){
+    const key=`${ev.name.trim()}|${ev.date}|${ev.city.trim()}`;
+    if(keys.has(key)){
+      const ex=keys.get(key);
+      ev.djs.forEach(d=>{if(!ex.djs.includes(d))ex.djs.push(d);});
+    } else {
+      const merged={...ev,djs:[...ev.djs]};
+      keys.set(key,merged);
+      MERGED_MAP.set(ev.id,merged);
+    }
+  }
+  return[...keys.values()];
+}
 
 // ── LOAD EVENTS FROM SUPABASE ─────────────────────────────────────────────────
 async function loadEvents(){
@@ -878,18 +910,20 @@ function renderMonths(){
 function selectMonth(m){
   selMonth=m;
   const results=EVENTS.filter(e=>e.city===selCity&&parseInt(e.date.split("-")[1])-1===m).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  document.getElementById('events-label').textContent=`${results.length} EVENTS IN ${selCity.toUpperCase()}`;
+  const grouped=groupEvents(results);
+  document.getElementById('events-label').textContent=`${grouped.length} EVENTS IN ${selCity.toUpperCase()}`;
   document.getElementById('events-month-label').textContent=MONTHS[m];
-  document.getElementById('events-list').innerHTML=results.map(ev=>eventRowHTML(ev)).join('');
+  document.getElementById('events-list').innerHTML=grouped.map(ev=>eventRowHTML(ev)).join('');
   goStep(2);
 }
 
 function selectDJ(dj){
   selDJ=dj;
-  const results=EVENTS.filter(e=>e.djs.includes(dj)).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  document.getElementById('events-label').textContent=`${results.length} EVENTS WITH ${dj.toUpperCase()}`;
+  const results=EVENTS.filter(e=>e.djs.some(d=>d.toLowerCase()===dj.toLowerCase())).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const grouped=groupEvents(results);
+  document.getElementById('events-label').textContent=`${grouped.length} EVENTS WITH ${dj.toUpperCase()}`;
   document.getElementById('events-month-label').textContent='';
-  document.getElementById('events-list').innerHTML=results.map(ev=>eventRowHTML(ev)).join('');
+  document.getElementById('events-list').innerHTML=grouped.map(ev=>eventRowHTML(ev)).join('');
   currentStep=2;
   document.getElementById('step-city').style.display='none';
   document.getElementById('step-month').style.display='none';
@@ -943,18 +977,18 @@ function toggleDetailSave(){toggleSave(detailEv.id);}
 
 // ── DETAIL ────────────────────────────────────────────────────────────────────
 function openDetail(id){
-  const ev=EVENTS.find(e=>e.id===id);
+  const ev=MERGED_MAP.has(id)?MERGED_MAP.get(id):EVENTS.find(e=>e.id===id);
   if(!ev) return;
   detailEv=ev;
   const{day,mon}=fmtDate(ev.date);
   const days=daysUntil(ev.date);
-  document.getElementById('det-img').src=countryImg(ev.country);
+  document.getElementById('det-img').src=countryImgHero(ev.country);
   document.getElementById('det-genre').textContent=`${ev.genre.toUpperCase()} · ${FLAGS[ev.country]||''} ${ev.city.toUpperCase()}`;
   document.getElementById('det-name').textContent=ev.name;
   document.getElementById('det-venue').textContent=ev.venue;
   document.getElementById('det-date').textContent=`${day} ${mon}`;
   document.getElementById('det-days').textContent=days>0?`${days}d`:days===0?'TODAY':'PAST';
-  document.getElementById('det-lineup').innerHTML=ev.djs.map(dj=>`<div class="lineup-row"><div class="lineup-ico">${DJ_NATIONALITY[dj]||'🎛'}</div><span class="lineup-name">${dj}</span></div>`).join('');
+  document.getElementById('det-lineup').innerHTML=ev.djs.map(dj=>`<div class="lineup-row"><div class="lineup-ico">${djFlag(dj)}</div><span class="lineup-name">${dj}</span></div>`).join('');
   document.getElementById('det-tags').innerHTML=ev.tags.map(t=>`<span class="tag">${t}</span>`).join('');
   document.getElementById('det-ticket').href=ev.ticket;
   const isSaved=saved.includes(ev.id);
@@ -969,6 +1003,22 @@ function closeDetail(){
   detailEv=null;
 }
 
+// ── SWIPE RIGHT TO CLOSE DETAIL ───────────────────────────────────────────────
+(function(){
+  let tx=0,ty=0;
+  const det=document.getElementById('detail');
+  det.addEventListener('touchstart',e=>{
+    tx=e.touches[0].clientX;
+    ty=e.touches[0].clientY;
+  },{passive:true});
+  det.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    const dy=Math.abs(e.changedTouches[0].clientY-ty);
+    // Swipe right >80px and mostly horizontal (not a vertical scroll)
+    if(dx>80&&dy<60) closeDetail();
+  },{passive:true});
+})();
+
 // ── SAVED ─────────────────────────────────────────────────────────────────────
 function renderSaved(){
   const evs=EVENTS.filter(e=>saved.includes(e.id)).sort((a,b)=>new Date(a.date)-new Date(b.date));
@@ -980,7 +1030,7 @@ function renderSaved(){
     bar.style.display='flex';
     bar.innerHTML=cities.map((c,i)=>`<span class="route-city">${FLAGS[EVENTS.find(e=>e.city===c)?.country]||''} ${c}</span>${i<cities.length-1?'<span class="route-arr">→</span>':''}`).join('');
   } else bar.style.display='none';
-  document.getElementById('saved-list').innerHTML=evs.map(ev=>eventRowHTML(ev)).join('');
+  document.getElementById('saved-list').innerHTML=groupEvents(evs).map(ev=>eventRowHTML(ev)).join('');
 }
 
 // ── AUTH ───────────────────────────────────────────────────────────────────────
