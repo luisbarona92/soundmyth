@@ -456,6 +456,7 @@ const FLAGS={
   'Belarus':'🇧🇾','Peru':'🇵🇪','Lithuania':'🇱🇹','Lebanon':'🇱🇧','Egypt':'🇪🇬',
   'Albania':'🇦🇱','Guatemala':'🇬🇹','South Korea':'🇰🇷','Estonia':'🇪🇪','Iceland':'🇮🇸',
   'Kyrgyzstan':'🇰🇬',
+  'United States of America':'🇺🇸',
 };
 const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 let ALL_CITIES=[], ALL_DJS=[], ALL_COUNTRIES=[];
@@ -798,6 +799,9 @@ const COUNTRY_ISO={
   'CL':'Chile','PE':'Peru','LB':'Lebanon','EG':'Egypt',
   'KR':'South Korea','KG':'Kyrgyzstan','AE':'United Arab Emirates',
   'GT':'Guatemala','CR':'Costa Rica',
+  // Full-name aliases (RA returns full names)
+  'United States of America':'United States',
+  'United Kingdom of Great Britain and Northern Ireland':'United Kingdom',
 };
 function normalizeCountry(c){return COUNTRY_ISO[c]||c;}
 
