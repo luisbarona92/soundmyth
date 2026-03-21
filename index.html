@@ -501,8 +501,8 @@ const DJ_SPOTLIGHT={
 
 function renderClubs(){
   const todayStr=new Date().toISOString().split('T')[0];
-  // Club events: tagged 'club' (RA, SK venue) or source='ra'
-  const clubs=EVENTS.filter(e=>e.date>=todayStr&&(e.tags.includes('club')||e.source==='ra'))
+  // Club events: RA source or SK-venue events (not DJ residencies or festivals)
+  const clubs=EVENTS.filter(e=>e.date>=todayStr&&(e.source==='ra'||(e.source==='songkick'&&e.tags.includes('club')&&!e.tags.includes('dj')&&!e.tags.includes('festival'))))
     .sort((a,b)=>new Date(a.date)-new Date(b.date))
     .slice(0,10);
   document.getElementById('home-clubs').innerHTML=clubs.map(ev=>{
@@ -1026,10 +1026,11 @@ function renderDJs(){
 function renderVenues(){
   const todayStr=new Date().toISOString().split('T')[0];
   const q=(document.getElementById('venue-search')||{value:''}).value.toLowerCase();
-  // Build unique venue list from events that have a non-empty venue
+  // Only club events from RA or SK-venue sources (not DJ residency/tour events)
+  const isClubEvent=ev=>ev.venue&&ev.date>=todayStr&&(ev.source==='ra'||(ev.source==='songkick'&&ev.tags.includes('club')&&!ev.tags.includes('dj')&&!ev.tags.includes('festival')));
   const venueMap=new Map();
   for(const ev of EVENTS){
-    if(!ev.venue||ev.date<todayStr) continue;
+    if(!isClubEvent(ev)) continue;
     const key=ev.venue;
     if(!venueMap.has(key)){
       venueMap.set(key,{name:ev.venue,city:ev.city,country:ev.country,count:0});
