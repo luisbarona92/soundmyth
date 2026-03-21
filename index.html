@@ -110,6 +110,12 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'He
 /* ── EVENT ROW ── */
 .event-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #0d0d0d;cursor:pointer;transition:opacity 0.15s;}
 .event-row:hover{opacity:0.6;}
+.event-row.past{cursor:default;opacity:1;}
+.event-row.past:hover{opacity:1;}
+.event-row.past .ev-day,.event-row.past .ev-mon,.event-row.past .ev-name,.event-row.past .ev-sub,.event-row.past .ev-price,.event-row.past .ev-genre{color:#333!important;}
+.event-row.past .ev-thumb{filter:grayscale(1) brightness(0.4);}
+.event-row.past .ev-save{pointer-events:none;color:#222!important;}
+.past-badge{font-size:8px;letter-spacing:1px;color:#2a2a2a;background:#0a0a0a;border:1px solid #161616;border-radius:3px;padding:2px 5px;margin-left:6px;vertical-align:middle;}
 .ev-thumb{width:46px;height:46px;border-radius:7px;object-fit:cover;flex-shrink:0;background:#111;}
 .ev-date{text-align:center;min-width:32px;flex-shrink:0;}
 .ev-day{color:#fff;font-size:16px;font-weight:700;line-height:1;}
@@ -479,9 +485,11 @@ const DJ_SPOTLIGHT={
 };
 
 function renderFeatured(){
-  // Priorizar eventos que tienen imagen de artista
-  const withImg=EVENTS.filter(e=>e.img);
-  const withoutImg=EVENTS.filter(e=>!e.img);
+  const todayStr=new Date().toISOString().split('T')[0];
+  // Priorizar eventos que tienen imagen de artista (solo futuros en el featured)
+  const upcoming=EVENTS.filter(e=>e.date>=todayStr);
+  const withImg=upcoming.filter(e=>e.img);
+  const withoutImg=upcoming.filter(e=>!e.img);
   const pool=[...withImg,...withoutImg];
   const top=pool.slice(0,5);
   document.getElementById('home-featured').innerHTML=top.map(ev=>{
@@ -784,9 +792,11 @@ function groupEvents(events){
 // ── LOAD EVENTS FROM SUPABASE ─────────────────────────────────────────────────
 async function loadEvents(){
   const today=new Date().toISOString().split('T')[0];
+  const minus15=new Date(); minus15.setDate(minus15.getDate()-15);
+  const fetchFrom=minus15.toISOString().split('T')[0];
   let allData=[],from=0;
   while(true){
-    const{data}=await sb.from('events').select('*').gte('date',today).order('date').range(from,from+999);
+    const{data}=await sb.from('events').select('*').gte('date',fetchFrom).order('date').range(from,from+999);
     if(!data||data.length===0) break;
     allData=allData.concat(data);
     if(data.length<1000) break;
@@ -801,12 +811,13 @@ async function loadEvents(){
         price:e.price||'', ticket:e.ticket_url||'#', img:e.img_url||''
       }));
   }
-  ALL_CITIES=[...new Set(EVENTS.map(e=>e.city))].sort();
-  ALL_DJS=[...new Set(EVENTS.flatMap(e=>e.djs))].sort();
+  const futureEvents=EVENTS.filter(e=>e.date>=today);
+  ALL_CITIES=[...new Set(futureEvents.map(e=>e.city))].sort();
+  ALL_DJS=[...new Set(futureEvents.flatMap(e=>e.djs))].sort();
   // Países en orden alfabético
-  ALL_COUNTRIES=[...new Set(EVENTS.map(e=>e.country).filter(Boolean))].sort();
-  document.getElementById('event-count-label').textContent=`${EVENTS.length} EVENTS`;
-  document.getElementById('stat-events').textContent=EVENTS.length;
+  ALL_COUNTRIES=[...new Set(futureEvents.map(e=>e.country).filter(Boolean))].sort();
+  document.getElementById('event-count-label').textContent=`${futureEvents.length} EVENTS`;
+  document.getElementById('stat-events').textContent=futureEvents.length;
   document.getElementById('stat-countries').textContent=ALL_COUNTRIES.length;
   document.getElementById('stat-cities').textContent=ALL_CITIES.length;
   document.getElementById('stat-djs').textContent=DJ_MAG_ORDER.filter(dj=>ALL_DJS.some(d=>d.toLowerCase()===dj.toLowerCase())).length;
@@ -1013,17 +1024,20 @@ function eventRowHTML(ev){
   const{day,mon}=fmtDate(ev.date);
   const isSaved=saved.includes(ev.id);
   const thumb=countryImg(ev.country);
-  return`<div class="event-row" onclick='openDetail(${JSON.stringify(ev.id)})'>
+  const todayStr=new Date().toISOString().split('T')[0];
+  const isPast=ev.date<todayStr;
+  const click=isPast?'':'onclick=\'openDetail('+JSON.stringify(ev.id)+')\'';
+  return`<div class="event-row${isPast?' past':''}" ${click}>
     <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
     <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
     <div class="ev-divider"></div>
     <div class="ev-info">
-      <div class="ev-name">${ev.name}</div>
+      <div class="ev-name">${ev.name}${isPast?'<span class="past-badge">PAST</span>':''}</div>
       <div class="ev-sub">${FLAGS[ev.country]||''} ${ev.city} · ${ev.djs[0]}${ev.djs.length>1?` +${ev.djs.length-1}`:''}</div>
     </div>
     <div class="ev-right">
       <div><div class="ev-genre">${ev.genre}</div></div>
-      <button class="ev-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
+      <button class="ev-save${isSaved?' saved':''}" onclick='event.stopPropagation();${isPast?'':'toggleSave('+JSON.stringify(ev.id)+')'}'>${isSaved?'♥':'♡'}</button>
     </div>
   </div>`;
 }
