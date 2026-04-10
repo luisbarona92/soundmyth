@@ -1,0 +1,19 @@
+{
+  "name": "soundmyth-scraper",
+  "version": "1.0.0",
+  "description": "Weekly scraper for SoundMyth events",
+  "type": "module",
+  "scripts": {
+    "scrape": "node scrape-all.js && node scrape-extended.js",
+    "scrape:bit": "node scrape-all.js",
+    "scrape:extended": "node scrape-extended.js",
+    "export": "node export-excel.mjs",
+    "bandsintown": "node bandsintown.js",
+    "test-api": "node test-api.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "dotenv": "^16.4.5",
+    "xlsx": "^0.18.5"
+  }
+}

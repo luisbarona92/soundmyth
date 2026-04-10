@@ -12,3 +12,9 @@ Thumbs.db
 
 # Misc
 _ul
+nul
+
+# Scraper
+scraper/node_modules/
+scraper/.env
+scraper/*-log.txt
