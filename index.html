@@ -508,12 +508,46 @@ setTimeout(()=>{
 },2000);
 
 // ── HOME FEATURED ─────────────────────────────────────────────────────────────
-const DJ_SPOTLIGHT={
-  name:"Black Coffee",
-  sub:"Afro House · Deep House · South Africa",
-  img:"https://r2.theaudiodb.com/images/media/artist/thumb/tvypux1445260882.jpg",
-  eventsCount:()=>EVENTS.filter(e=>e.djs.some(d=>d.toLowerCase().includes('black coffee'))).length,
-};
+async function fetchAudioDBImg(name){
+  try{
+    const r=await fetch(`https://www.theaudiodb.com/api/v1/json/2/search.php?s=${encodeURIComponent(name)}`);
+    const j=await r.json();
+    return j.artists?.[0]?.strArtistThumb||j.artists?.[0]?.strArtistFanart||null;
+  }catch{return null;}
+}
+
+async function renderSpotlight(){
+  const ym=new Date().toISOString().slice(0,7);
+  const counts={};
+  for(const ev of EVENTS){
+    if(!ev.date.startsWith(ym)) continue;
+    for(const dj of (ev.djs||[])){
+      const key=dj.toLowerCase();
+      if(!TOP100_DJS.has(key)) continue;
+      if(!counts[key]) counts[key]={name:dj,count:0};
+      counts[key].count++;
+    }
+  }
+  const sorted=Object.values(counts).sort((a,b)=>b.count-a.count);
+  if(!sorted.length) return;
+  const winner=sorted[0];
+  const img=await fetchAudioDBImg(winner.name);
+  const djEvents=EVENTS.filter(e=>e.djs.some(d=>d.toLowerCase()===winner.name.toLowerCase()));
+  const genre=djEvents[0]?.genre||'Electronic';
+  const card=document.getElementById('dj-spotlight-card');
+  card.innerHTML=`
+    ${img?`<img src="${img}" alt="" onerror="this.style.display='none'"/>`:''}
+    <div class="dj-spotlight-grad"></div>
+    <div class="dj-spotlight-body">
+      <div class="dj-badge">DJ OF THE MONTH</div>
+      <div class="dj-name">${winner.name}</div>
+      <div class="dj-sub">${genre} · ${winner.count} event${winner.count!==1?'s':''} this month</div>
+    </div>`;
+  card.onclick=()=>{
+    switchTab('plan',document.querySelectorAll('.nav-btn')[1]);
+    setTimeout(()=>{setMode('dj');selectDJ(winner.name);},100);
+  };
+}
 
 function renderFestivals(){
   const todayStr=new Date().toISOString().split('T')[0];
@@ -605,20 +639,7 @@ function renderFeatured(){
   renderClubs();
 
   // DJ spotlight
-  const cnt=DJ_SPOTLIGHT.eventsCount();
-  document.getElementById('dj-spotlight-card').innerHTML=`
-    <img src="${DJ_SPOTLIGHT.img}" alt="" onerror="this.style.display='none'"/>
-    <div class="dj-spotlight-grad"></div>
-    <div class="dj-spotlight-body">
-      <div class="dj-badge">DJ OF THE MONTH</div>
-      <div class="dj-name">${DJ_SPOTLIGHT.name}</div>
-      <div class="dj-sub">${DJ_SPOTLIGHT.sub}</div>
-      <div class="dj-events-count">🎛 ${cnt} event${cnt!==1?'s':''} in the catalogue</div>
-    </div>`;
-  document.getElementById('dj-spotlight-card').onclick=()=>{
-    switchTab('plan',document.querySelectorAll('.nav-btn')[1]);
-    setTimeout(()=>{setMode('dj');selectDJ(DJ_SPOTLIGHT.name);},100);
-  };
+  renderSpotlight();
 }
 
 // ── CURATED DJ LIST (404 artists, ranked) ────────────────────────────────────
