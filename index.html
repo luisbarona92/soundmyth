@@ -450,6 +450,8 @@ button:focus{outline:none;}
 <script>
 let EVENTS=[];
 
+const TOP100_DJS=new Set(["david guetta","martin garrix","alok","dimitri vegas & like mike","armin van buuren","timmy trumpet","fisher","afrojack","charlotte de witte","anyma","vintage culture","peggy gou","don diablo","steve aoki","hardwell","calvin harris","black coffee","w&w","lost frequencies","keinemusik","tiësto","reinier zonneveld","kshmr","alan walker","carl cox","oliver heldens","jamie jones","r3hab","nicky romero","claptone","skrillex","vini vici","fred again..","swedish house mafia","joel corry","indira paganotto","eric prydz","amelie lens","paul van dyk","dj snake","dom dolla","marshmello","the martinez brothers","zedd","bassjackers","john summit","quintino","michael bibi","boris brejcha","korolova","alesso","james hype","maddix","hugel","solomun","mochakk","lilly palmer","nora en pure","atb","deborah de luca","above & beyond","sara landry","nervo","sub zero project","kölsch","lucas & steve","nico moreno","gordo","pawsa","the chainsmokers","liu","mike williams","artbat","kaaze","miss monique","burak yeter","mau p","le twins","i hate models","marnik","chris stussy","deadmau5","wukong","fedde le grand","ferry corsten","plastik funk","dubvision","b jones","giuseppe ottaviani","cuebrick","mariana bo","meduza","fantasm","vinai","chris lake","faustix","honey dijon","nils van zandt","topic","marlon hoffstadt"]);
+
 // Flags: soporta códigos 2 letras (eventos manuales) y nombres completos (Bandsintown)
 const FLAGS={
   // Códigos legacy
@@ -565,8 +567,8 @@ function renderClubs(){
 
 function renderFeatured(){
   const todayStr=new Date().toISOString().split('T')[0];
-  // Priorizar eventos que tienen imagen de artista (solo futuros en el featured)
-  const upcoming=EVENTS.filter(e=>e.date>=todayStr);
+  // Solo eventos futuros con al menos un DJ top100
+  const upcoming=EVENTS.filter(e=>e.date>=todayStr && e.djs&&e.djs.some(d=>TOP100_DJS.has(d.toLowerCase())));
   // Pick 8 diverse events: prefer events with images + different countries
   const withImg=upcoming.filter(e=>e.img);
   const seenCountries=new Set();
