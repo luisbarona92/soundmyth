@@ -517,10 +517,10 @@ async function fetchAudioDBImg(name){
 }
 
 async function renderSpotlight(){
-  const ym=new Date().toISOString().slice(0,7);
+  const todayStr=new Date().toISOString().split('T')[0];
   const counts={};
   for(const ev of EVENTS){
-    if(!ev.date.startsWith(ym)) continue;
+    if(ev.date<todayStr) continue;
     for(const dj of (ev.djs||[])){
       const key=dj.toLowerCase();
       if(!TOP100_DJS.has(key)) continue;
@@ -541,7 +541,7 @@ async function renderSpotlight(){
     <div class="dj-spotlight-body">
       <div class="dj-badge">DJ OF THE MONTH</div>
       <div class="dj-name">${winner.name}</div>
-      <div class="dj-sub">${genre} · ${winner.count} event${winner.count!==1?'s':''} this month</div>
+      <div class="dj-sub">${genre} · ${winner.count} upcoming event${winner.count!==1?'s':''}</div>
     </div>`;
   card.onclick=()=>{
     switchTab('plan',document.querySelectorAll('.nav-btn')[1]);
