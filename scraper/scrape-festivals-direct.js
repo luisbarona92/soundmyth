@@ -25,7 +25,7 @@ config({ path: resolve(__dirname, '.env') });
 const SB_URL  = process.env.SUPABASE_URL;
 const SB_KEY  = process.env.SUPABASE_SERVICE_KEY;
 const TODAY   = new Date().toISOString().split('T')[0];
-const DELAY   = 1200;  // ms between requests
+const DELAY   = 600;   // ms between requests
 
 if (!SB_URL || !SB_KEY) { console.error('❌  Missing Supabase env vars'); process.exit(1); }
 
@@ -45,7 +45,7 @@ const FESTIVALS_PATH = resolve(__dirname, 'data/festivals_all.json');
 
 async function fetchHTML(url) {
   try {
-    const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(14000), redirect: 'follow' });
+    const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(8000), redirect: 'follow' });
     if (!res.ok) return null;
     return await res.text();
   } catch { return null; }

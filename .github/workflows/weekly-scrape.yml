@@ -10,7 +10,7 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     defaults:
       run:
@@ -31,6 +31,8 @@ jobs:
         run: npm ci
 
       - name: Scrape DJs (BIT + Songkick cascade)
+        continue-on-error: true
+        timeout-minutes: 20
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -38,6 +40,8 @@ jobs:
         run: node scrape-extended.js
 
       - name: Scrape Festivals (BIT + Songkick)
+        continue-on-error: true
+        timeout-minutes: 15
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -45,24 +49,30 @@ jobs:
         run: node scrape-festivals-bit.js
 
       - name: Scrape Festivals (direct websites)
+        continue-on-error: true
+        timeout-minutes: 10
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node scrape-festivals-direct.js
 
       - name: Scrape Clubs (Resident Advisor)
+        continue-on-error: true
+        timeout-minutes: 10
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node scrape-clubs-ra.js
 
       - name: Deduplicate events
+        timeout-minutes: 5
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node dedupe.js
 
       - name: Purge old events (>15 days)
+        timeout-minutes: 5
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
