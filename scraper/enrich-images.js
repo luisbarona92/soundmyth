@@ -7,6 +7,8 @@
  *
  * Improvements in v2:
  *   - DJ name variant matching: strips "(official)", "DJ " prefix, "The ", "&"/"and"
+ *     Also: dots, semicolons, Nordic chars (ø→o, å→a), "live" suffix
+ *   - Wikipedia fallback: free API for famous DJs not on TheAudioDB
  *   - Festival image overrides for JS-rendered sites (Tomorrowland, EDC, ASOT...)
  *   - Cache versioning: auto-retries failed lookups when search logic improves
  *
@@ -148,25 +150,58 @@ function djNameVariants(name) {
   // Strip "The " prefix
   if (lower.startsWith('the ')) variants.push(name.slice(4).trim());
 
-  // Remove special chars: colons, exclamation marks
-  const cleaned = name.replace(/[:!]/g, '').replace(/\s+/g, ' ').trim();
+  // Remove special chars: colons, exclamation marks, dots, semicolons
+  const cleaned = name.replace(/[:!.;]/g, '').replace(/\s+/g, ' ').trim();
   if (cleaned !== name) variants.push(cleaned);
 
-  // Remove diacritics/special unicode (e.g. ø → o, å → a)
+  // Collapse " & " to space (helps "Tom & Collins" → "Tom Collins")
+  if (lower.includes(' & ')) variants.push(name.replace(/ & /g, ' '));
+
+  // Strip trailing dots (stylistic: "Rossi." → "Rossi")
+  const noDot = name.replace(/\.+$/, '').trim();
+  if (noDot !== name) variants.push(noDot);
+
+  // Remove diacritics/special unicode via NFD (e.g. é → e, ñ → n)
   const nfd = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   if (nfd !== name) variants.push(nfd);
+
+  // Explicit Nordic/special chars that NFD doesn't handle (ø→o, å→a, ū→u)
+  const nordic = name.replace(/[øØ]/g, 'o').replace(/[åÅ]/g, 'a').replace(/[ūŪ]/g, 'u');
+  if (nordic !== name) variants.push(nordic);
+
+  // Strip " live" suffix
+  const noLive = name.replace(/\s+live$/i, '').trim();
+  if (noLive !== name) variants.push(noLive);
 
   // Dedupe while preserving order
   return [...new Set(variants.filter(v => v.length > 0))];
 }
 
-// ── TheAudioDB DJ lookup (with smart name variants) ────────────────────────
+// ── Wikipedia pageimages API (free, no key, good electronic coverage) ──────
+async function fetchWikipediaImage(name) {
+  try {
+    const query = `${name} DJ`;
+    const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=1&prop=pageimages&format=json&pithumbsize=400`;
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'SoundMyth/1.0 (DJ event aggregator; contact@soundmyth.com)' },
+      signal: AbortSignal.timeout(8000),
+    });
+    const json = await res.json();
+    const pages = json.query?.pages;
+    if (!pages) return null;
+    const page = Object.values(pages)[0];
+    return page?.thumbnail?.source || null;
+  } catch { return null; }
+}
+
+// ── DJ image lookup: TheAudioDB (variants) → Wikipedia fallback ────────────
 async function fetchDJImage(name) {
   const key = name.toLowerCase().trim();
   if (key in djCache) return djCache[key];
 
   const variants = djNameVariants(name);
 
+  // Strategy 1: TheAudioDB with name variants
   for (const variant of variants) {
     try {
       const url = `https://www.theaudiodb.com/api/v1/json/2/search.php?s=${encodeURIComponent(variant)}`;
@@ -178,9 +213,18 @@ async function fetchDJImage(name) {
         djCache[key] = img;
         return img;
       }
-      await sleep(200); // Rate limit between variants
+      await sleep(200);
     } catch { /* continue to next variant */ }
   }
+
+  // Strategy 2: Wikipedia (covers famous DJs missing from TheAudioDB)
+  try {
+    const wikiImg = await fetchWikipediaImage(name);
+    if (wikiImg) {
+      djCache[key] = wikiImg;
+      return wikiImg;
+    }
+  } catch { /* continue */ }
 
   djCache[key] = null;
   return null;
