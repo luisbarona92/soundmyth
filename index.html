@@ -562,7 +562,7 @@ function renderFestivals(){
   document.getElementById('home-festivals').innerHTML=fests.map(ev=>{
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
-    const img=ev.img||CITY_IMG[ev.city]||countryImg(ev.country);
+    const img=bestImg(ev);
     return`<div class="ev-card-h" onclick='openDetail(${JSON.stringify(ev.id)})'>
       <img src="${img}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
       <div class="ev-card-h-grad"></div>
@@ -585,7 +585,7 @@ function renderClubs(){
   document.getElementById('home-clubs').innerHTML=clubs.map(ev=>{
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
-    const img=CITY_IMG[ev.city]||countryImg(ev.country);
+    const img=bestImg(ev);
     return`<div class="ev-card-h" onclick='openDetail(${JSON.stringify(ev.id)})'>
       <img src="${img}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
       <div class="ev-card-h-grad"></div>
@@ -624,7 +624,7 @@ function renderFeatured(){
     const{day,mon}=fmtDate(ev.date);
     const isSaved=saved.includes(ev.id);
     return`<div class="ev-card-h" onclick='openDetail(${JSON.stringify(ev.id)})'>
-      <img src="${ev.img||countryImg(ev.country)}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
+      <img src="${bestImg(ev)}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
       <div class="ev-card-h-grad"></div>
       <button class="ev-card-h-save${isSaved?' saved':''}" onclick='event.stopPropagation();toggleSave(${JSON.stringify(ev.id)})'>${isSaved?'♥':'♡'}</button>
       <div class="ev-card-h-body">
@@ -850,9 +850,42 @@ const CITY_IMG={
   'Bucharest':   'https://images.unsplash.com/photo-1558642084-fd07fae5282e?w=200&h=130&fit=crop&auto=format',
   'Riga':        'https://images.unsplash.com/photo-1519230819017-2710f8f50edb?w=200&h=130&fit=crop&auto=format',
   'Ibiza':       'https://images.unsplash.com/photo-1504150558240-0b4fd8946624?w=200&h=130&fit=crop&auto=format',
+  'Manchester':  'https://images.unsplash.com/photo-1563295219-0ed2dc678876?w=200&h=130&fit=crop&auto=format',
+  'Detroit':     'https://images.unsplash.com/photo-1569974498991-d3c12a00c68c?w=200&h=130&fit=crop&auto=format',
+  'Denver':      'https://images.unsplash.com/photo-1546156929-a4c0ac411f47?w=200&h=130&fit=crop&auto=format',
+  'San Francisco':'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=200&h=130&fit=crop&auto=format',
+  'Montreal':    'https://images.unsplash.com/photo-1519178614-68673b201f36?w=200&h=130&fit=crop&auto=format',
+  'Toronto':     'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=200&h=130&fit=crop&auto=format',
+  'Glasgow':     'https://images.unsplash.com/photo-1580128660010-fd027e1e587a?w=200&h=130&fit=crop&auto=format',
+  'Rotterdam':   'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=200&h=130&fit=crop&auto=format',
+  'Eindhoven':   'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=200&h=130&fit=crop&auto=format',
+  'Antwerp':     'https://images.unsplash.com/photo-1552127075-f2dba42a35e4?w=200&h=130&fit=crop&auto=format',
+  'Antwerpen':   'https://images.unsplash.com/photo-1552127075-f2dba42a35e4?w=200&h=130&fit=crop&auto=format',
+  'Dubai':       'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=200&h=130&fit=crop&auto=format',
+  'Singapore':   'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=200&h=130&fit=crop&auto=format',
+  'Bangkok':     'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=200&h=130&fit=crop&auto=format',
+  'Bali':        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=200&h=130&fit=crop&auto=format',
+  'Seoul':       'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=200&h=130&fit=crop&auto=format',
+  'Buenos Aires':'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=200&h=130&fit=crop&auto=format',
+  'Bogotá':      'https://images.unsplash.com/photo-1576204735006-a45f7b7c6d8e?w=200&h=130&fit=crop&auto=format',
+  'Bogota':      'https://images.unsplash.com/photo-1576204735006-a45f7b7c6d8e?w=200&h=130&fit=crop&auto=format',
+  'Cape Town':   'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=200&h=130&fit=crop&auto=format',
+  'Beirut':      'https://images.unsplash.com/photo-1523207911345-32501502db22?w=200&h=130&fit=crop&auto=format',
+  'Split':       'https://images.unsplash.com/photo-1555993539-1732b0258235?w=200&h=130&fit=crop&auto=format',
+  'Tulum':       'https://images.unsplash.com/photo-1503891617560-5b8c2e28cbf6?w=200&h=130&fit=crop&auto=format',
+  'Cancún':      'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=200&h=130&fit=crop&auto=format',
+  'Cancun':      'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=200&h=130&fit=crop&auto=format',
+  'Washington':  'https://images.unsplash.com/photo-1501466044931-62695aada8e9?w=200&h=130&fit=crop&auto=format',
+  'Seattle':     'https://images.unsplash.com/photo-1502175353174-a7a70e73b362?w=200&h=130&fit=crop&auto=format',
+  'Nashville':   'https://images.unsplash.com/photo-1587162146766-e06b1189b907?w=200&h=130&fit=crop&auto=format',
 };
 const CITY_IMG_FALLBACK='https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=200&h=130&fit=crop&auto=format';
 function cityImg(city){return CITY_IMG[city]||CITY_IMG_FALLBACK;}
+function bestImg(ev){return ev.img||CITY_IMG[ev.city]||countryImg(ev.country);}
+function bestImgHero(ev){
+  const base=(ev.img||CITY_IMG[ev.city]||COUNTRY_IMG[ev.country]||COUNTRY_IMG_FALLBACK).replace(/\?.*$/,'');
+  return base+'?w=800&h=400&fit=crop&auto=format';
+}
 
 // ── ISO 2-LETTER → FULL COUNTRY NAME ──────────────────────────────────────────
 const COUNTRY_ISO={
@@ -1229,12 +1262,12 @@ function selectDJ(dj){
 function eventRowHTML(ev){
   const{day,mon}=fmtDate(ev.date);
   const isSaved=saved.includes(ev.id);
-  const thumb=ev.img||countryImg(ev.country);
+  const thumb=bestImg(ev);
   const todayStr=new Date().toISOString().split('T')[0];
   const isPast=ev.date<todayStr;
   const click=isPast?'':'onclick=\'openDetail('+JSON.stringify(ev.id)+')\'';
   return`<div class="event-row${isPast?' past':''}" ${click}>
-    <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${countryImg(ev.country)}'"/>
+    <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
     <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
     <div class="ev-divider"></div>
     <div class="ev-info">
@@ -1277,7 +1310,7 @@ function openDetail(id){
   detailEv=ev;
   const{day,mon}=fmtDate(ev.date);
   const days=daysUntil(ev.date);
-  document.getElementById('det-img').src=ev.img?ev.img.replace(/w=\d+/,'w=800').replace(/h=\d+/,'h=400'):countryImgHero(ev.country);
+  document.getElementById('det-img').src=bestImgHero(ev);
   document.getElementById('det-genre').textContent=`${ev.genre.toUpperCase()} · ${FLAGS[ev.country]||''} ${ev.city.toUpperCase()}`;
   document.getElementById('det-name').textContent=ev.name;
   document.getElementById('det-venue').textContent=ev.venue;
