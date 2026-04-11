@@ -77,6 +77,36 @@ query GetPromoterEvents($id: ID!, $year: Int!) {
   }
 }`;
 
+// Listing-based query: searches upcoming events at a specific venue by area.
+// This is a fallback when the venue.events(year) query returns 0 events,
+// which happens for some clubs where RA indexes events via listings instead.
+const VENUE_LISTING_QUERY = `
+query GetVenueListings($id: ID!, $pageSize: Int) {
+  venue(id: $id) {
+    id name
+    area { name country { name } }
+    eventListings(pageSize: $pageSize) {
+      id title startTime endTime lineup
+      artists { name contentUrl }
+      flyerFront contentUrl
+    }
+  }
+}`;
+
+const PROMOTER_LISTING_QUERY = `
+query GetPromoterListings($id: ID!, $pageSize: Int) {
+  promoter(id: $id) {
+    id name
+    area { name country { name } }
+    eventListings(pageSize: $pageSize) {
+      id title startTime endTime lineup
+      artists { name contentUrl }
+      venue { name area { name country { name } } }
+      flyerFront contentUrl
+    }
+  }
+}`;
+
 async function gqlFetch(query, variables, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
@@ -91,8 +121,12 @@ async function gqlFetch(query, variables, retries = 2) {
         return null;
       }
       const json = await res.json();
+      // Return partial data even if there are errors — GraphQL may return the
+      // entity but error on a specific field (e.g. eventListings not supported).
+      // Callers check for null fields themselves.
+      if (json.data) return json.data;
       if (json.errors?.length) return null;
-      return json.data ?? null;
+      return null;
     } catch {
       if (attempt < retries) { await sleep(2000 * (attempt + 1)); continue; }
       return null;
@@ -104,31 +138,65 @@ async function gqlFetch(query, variables, retries = 2) {
 async function fetchRAClubEvents(raId, isPromoter) {
   const query = isPromoter ? PROMOTER_EVENTS_QUERY : VENUE_EVENTS_QUERY;
   const key   = isPromoter ? 'promoter' : 'venue';
+  const today = new Date().toISOString().split('T')[0];
 
-  // Fetch this year's events
+  // ── Strategy 1: year-based events query ────────────────────────────────────
   const d1    = await gqlFetch(query, { id: raId, year: THIS_YEAR });
   let entity  = d1?.[key] ?? null;
 
-  // Fallback: if venue returns nothing, try as promoter
-  if (!entity && !isPromoter) {
-    const d2 = await gqlFetch(PROMOTER_EVENTS_QUERY, { id: raId, year: THIS_YEAR });
-    entity = d2?.promoter ?? null;
-  }
-  if (!entity) return null;
-
   // In Q4, also fetch next year and merge
-  if (FETCH_NEXT) {
-    const qKey = entity.events ? key : 'promoter';
-    const dN   = await gqlFetch(isPromoter ? PROMOTER_EVENTS_QUERY : VENUE_EVENTS_QUERY, { id: raId, year: NEXT_YEAR });
+  if (entity && FETCH_NEXT) {
+    const dN = await gqlFetch(query, { id: raId, year: NEXT_YEAR });
     const nextEvts = dN?.[key]?.events || [];
     entity = { ...entity, events: [...(entity.events || []), ...nextEvts] };
   }
 
   // Filter to today-onwards
-  const today = new Date().toISOString().split('T')[0];
-  entity.events = (entity.events || []).filter(e => (e.startTime || '').slice(0, 10) >= today);
+  if (entity) {
+    entity.events = (entity.events || []).filter(e => (e.startTime || '').slice(0, 10) >= today);
+  }
 
-  return entity;
+  // If we got events, return early
+  if (entity?.events?.length) return entity;
+
+  // ── Strategy 2: eventListings query (no year filter, returns upcoming) ─────
+  // Some clubs on RA return 0 events via the year query but have events via
+  // their eventListings endpoint which returns upcoming events directly.
+  const listQuery = isPromoter ? PROMOTER_LISTING_QUERY : VENUE_LISTING_QUERY;
+  const dL = await gqlFetch(listQuery, { id: raId, pageSize: 50 });
+  const listEntity = dL?.[key] ?? null;
+  if (listEntity?.eventListings?.length) {
+    // Normalise: copy eventListings into .events for uniform downstream handling
+    listEntity.events = (listEntity.eventListings || [])
+      .filter(e => (e.startTime || '').slice(0, 10) >= today);
+    delete listEntity.eventListings;
+    if (listEntity.events.length) return listEntity;
+  }
+
+  // ── Strategy 3: cross-type fallback (venue ↔ promoter) ────────────────────
+  // Some clubs registered as /clubs/ also have a /promoters/ entry (and vice
+  // versa) that carries the actual events. Try the opposite type.
+  if (!isPromoter) {
+    // Venue returned nothing → try as promoter (year query)
+    const d2 = await gqlFetch(PROMOTER_EVENTS_QUERY, { id: raId, year: THIS_YEAR });
+    let alt = d2?.promoter ?? null;
+    if (alt) {
+      alt.events = (alt.events || []).filter(e => (e.startTime || '').slice(0, 10) >= today);
+      if (alt.events.length) return alt;
+    }
+    // Also try promoter eventListings
+    const d3 = await gqlFetch(PROMOTER_LISTING_QUERY, { id: raId, pageSize: 50 });
+    const altList = d3?.promoter ?? null;
+    if (altList?.eventListings?.length) {
+      altList.events = (altList.eventListings || [])
+        .filter(e => (e.startTime || '').slice(0, 10) >= today);
+      delete altList.eventListings;
+      if (altList.events.length) return altList;
+    }
+  }
+
+  // Return whatever entity we have (may have 0 events) so we don't lose metadata
+  return entity || listEntity || null;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -164,7 +232,9 @@ function ticketUrl(links) {
   return (links.find(l => /ticket/i.test(l.title || '')) || links[0]).url || '';
 }
 
-/** Normalise one RA event into our Supabase schema */
+/** Normalise one RA event into our Supabase schema.
+ *  For promoter events, venue/city/country may come from the event's nested
+ *  venue object rather than the parent entity. */
 function normaliseRAEvent(e, clubName, city, country) {
   const dateStr = (e.startTime || '').split('T')[0];
   if (!dateStr || dateStr < TODAY) return null;
@@ -175,11 +245,16 @@ function normaliseRAEvent(e, clubName, city, country) {
   // Only skip if truly no useful info at all (no title AND no artists AND no id)
   if (!e.id) return null;
 
+  // For promoter events, the venue info is on each event — prefer it over parent
+  const evVenue   = e.venue?.name || '';
+  const evCity    = e.venue?.area?.name || '';
+  const evCountry = e.venue?.area?.country?.name || '';
+
   return {
     name:       e.title || `${clubName} event`,
-    venue:      clubName,
-    city,
-    country:    normCountry(country),
+    venue:      evVenue || clubName,
+    city:       evCity  || city,
+    country:    normCountry(evCountry || country),
     date:       dateStr,
     djs:        artists,
     genre:      'Electronic',
