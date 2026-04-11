@@ -6,7 +6,8 @@
 <title>Sound Myth</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;min-height:100vh;}
+html{overscroll-behavior:none;}
+body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;min-height:100vh;overscroll-behavior-x:none;}
 ::-webkit-scrollbar{width:0;height:0}
 #app{max-width:430px;margin:0 auto;padding-bottom:72px;}
 
@@ -178,7 +179,7 @@ button:focus{outline:none;}
 .auth-sheet{background:#0a0a0a;border:1px solid #1a1a1a;border-radius:16px 16px 0 0;width:100%;max-width:430px;padding:28px 24px 44px;animation:fadeup 0.2s ease;}
 .auth-title{color:#fff;font-size:15px;font-weight:800;letter-spacing:0.3px;margin-bottom:5px;}
 .auth-sub{color:#444;font-size:12px;line-height:1.6;margin-bottom:20px;}
-.auth-input{width:100%;background:#000;border:1px solid #1e1e1e;border-radius:8px;padding:12px 14px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;}
+.auth-input{width:100%;background:#000;border:1px solid #1e1e1e;border-radius:8px;padding:12px 14px;color:#fff;font-size:16px;font-family:inherit;margin-bottom:10px;}
 .auth-btn-main{width:100%;background:#fff;color:#000;border:none;border-radius:8px;padding:13px;font-size:11px;font-weight:800;letter-spacing:1.5px;cursor:pointer;font-family:inherit;}
 .auth-btn-main:disabled{background:#1a1a1a;color:#444;cursor:default;}
 .auth-cancel{width:100%;background:none;border:none;color:#333;font-size:11px;padding:12px;cursor:pointer;font-family:inherit;margin-top:2px;letter-spacing:0.5px;}
@@ -454,28 +455,61 @@ const TOP100_DJS=new Set(["david guetta","martin garrix","alok","dimitri vegas &
 
 // Flags: soporta códigos 2 letras (eventos manuales) y nombres completos (Bandsintown)
 const FLAGS={
-  // Códigos legacy
+  // ISO codes
   'US':'🇺🇸','GB':'🇬🇧','DE':'🇩🇪','ES':'🇪🇸','NL':'🇳🇱','HU':'🇭🇺','JP':'🇯🇵',
-  // Nombres completos
-  'United States':'🇺🇸','Spain':'🇪🇸','United Kingdom':'🇬🇧','Germany':'🇩🇪',
-  'France':'🇫🇷','Netherlands':'🇳🇱','Canada':'🇨🇦','Belgium':'🇧🇪','Italy':'🇮🇹',
-  'Mexico':'🇲🇽','Poland':'🇵🇱','Hungary':'🇭🇺','Portugal':'🇵🇹','Switzerland':'🇨🇭',
-  'Austria':'🇦🇹','Croatia':'🇭🇷','Denmark':'🇩🇰','India':'🇮🇳','Sweden':'🇸🇪',
-  'South Africa':'🇿🇦','Brazil':'🇧🇷','Argentina':'🇦🇷','Czechia':'🇨🇿',
-  'Czech Republic':'🇨🇿','Malta':'🇲🇹','Colombia':'🇨🇴','United Arab Emirates':'🇦🇪',
-  'Finland':'🇫🇮','Norway':'🇳🇴','Japan':'🇯🇵','Thailand':'🇹🇭','Chile':'🇨🇱',
-  'Ireland':'🇮🇪','Romania':'🇷🇴','Australia':'🇦🇺','Russia':'🇷🇺','Indonesia':'🇮🇩',
-  'Greece':'🇬🇷','Latvia':'🇱🇻','Singapore':'🇸🇬','China':'🇨🇳','Serbia':'🇷🇸',
-  'Cyprus':'🇨🇾','Turkey':'🇹🇷','New Zealand':'🇳🇿','Slovakia':'🇸🇰',
-  'North Macedonia':'🇲🇰','Philippines':'🇵🇭','Costa Rica':'🇨🇷','Luxembourg':'🇱🇺',
-  'Belarus':'🇧🇾','Peru':'🇵🇪','Lithuania':'🇱🇹','Lebanon':'🇱🇧','Egypt':'🇪🇬',
-  'Albania':'🇦🇱','Guatemala':'🇬🇹','South Korea':'🇰🇷','Estonia':'🇪🇪','Iceland':'🇮🇸',
-  'Kyrgyzstan':'🇰🇬','Taiwan':'🇹🇼','Vietnam':'🇻🇳','Monaco':'🇲🇨',
-  'Bulgaria':'🇧🇬','Paraguay':'🇵🇾','Morocco':'🇲🇦','Tunisia':'🇹🇳',
-  'Jamaica':'🇯🇲','Malaysia':'🇲🇾','Cambodia':'🇰🇭','Ukraine':'🇺🇦',
-  'Georgia':'🇬🇪','Slovenia':'🇸🇮','Bosnia and Herzegovina':'🇧🇦',
-  'Montenegro':'🇲🇪','Moldova':'🇲🇩','Dominican Republic':'🇩🇴',
-  'United States of America':'🇺🇸','UK':'🇬🇧','USA':'🇺🇸',
+  'FR':'🇫🇷','CA':'🇨🇦','BE':'🇧🇪','IT':'🇮🇹','MX':'🇲🇽','PL':'🇵🇱','PT':'🇵🇹',
+  'CH':'🇨🇭','AT':'🇦🇹','HR':'🇭🇷','DK':'🇩🇰','IN':'🇮🇳','SE':'🇸🇪','ZA':'🇿🇦',
+  'BR':'🇧🇷','AR':'🇦🇷','CZ':'🇨🇿','MT':'🇲🇹','CO':'🇨🇴','AE':'🇦🇪','FI':'🇫🇮',
+  'NO':'🇳🇴','TH':'🇹🇭','CL':'🇨🇱','IE':'🇮🇪','RO':'🇷🇴','AU':'🇦🇺','RU':'🇷🇺',
+  'ID':'🇮🇩','GR':'🇬🇷','LV':'🇱🇻','SG':'🇸🇬','CN':'🇨🇳','RS':'🇷🇸','CY':'🇨🇾',
+  'TR':'🇹🇷','NZ':'🇳🇿','SK':'🇸🇰','MK':'🇲🇰','PH':'🇵🇭','CR':'🇨🇷','LU':'🇱🇺',
+  'BY':'🇧🇾','PE':'🇵🇪','LT':'🇱🇹','LB':'🇱🇧','EG':'🇪🇬','AL':'🇦🇱','GT':'🇬🇹',
+  'KR':'🇰🇷','EE':'🇪🇪','IS':'🇮🇸','KG':'🇰🇬','TW':'🇹🇼','VN':'🇻🇳','MC':'🇲🇨',
+  'BG':'🇧🇬','PY':'🇵🇾','MA':'🇲🇦','TN':'🇹🇳','JM':'🇯🇲','MY':'🇲🇾','KH':'🇰🇭',
+  'UA':'🇺🇦','GE':'🇬🇪','SI':'🇸🇮','BA':'🇧🇦','ME':'🇲🇪','MD':'🇲🇩','DO':'🇩🇴',
+  'PA':'🇵🇦','EC':'🇪🇨','UY':'🇺🇾','BO':'🇧🇴','VE':'🇻🇪','HN':'🇭🇳','SV':'🇸🇻',
+  'NI':'🇳🇮','CU':'🇨🇺','PR':'🇵🇷','TT':'🇹🇹','BB':'🇧🇧','BS':'🇧🇸','HT':'🇭🇹',
+  'KZ':'🇰🇿','UZ':'🇺🇿','AM':'🇦🇲','AZ':'🇦🇿','QA':'🇶🇦','KW':'🇰🇼','BH':'🇧🇭',
+  'OM':'🇴🇲','SA':'🇸🇦','JO':'🇯🇴','IQ':'🇮🇶','IL':'🇮🇱','PS':'🇵🇸','NG':'🇳🇬',
+  'KE':'🇰🇪','GH':'🇬🇭','TZ':'🇹🇿','ET':'🇪🇹','UG':'🇺🇬','SN':'🇸🇳','CM':'🇨🇲',
+  'DZ':'🇩🇿','LY':'🇱🇾','MU':'🇲🇺','MZ':'🇲🇿','CI':'🇨🇮','ZW':'🇿🇼','BW':'🇧🇼',
+  'NA':'🇳🇦','RW':'🇷🇼','MG':'🇲🇬','PK':'🇵🇰','BD':'🇧🇩','LK':'🇱🇰','NP':'🇳🇵',
+  'MM':'🇲🇲','LA':'🇱🇦','MN':'🇲🇳','HK':'🇭🇰','MO':'🇲🇴','FJ':'🇫🇯','PG':'🇵🇬',
+  'XK':'🇽🇰',
+  // Full country names (A-Z comprehensive)
+  'Afghanistan':'🇦🇫','Albania':'🇦🇱','Algeria':'🇩🇿','Andorra':'🇦🇩','Angola':'🇦🇴',
+  'Argentina':'🇦🇷','Armenia':'🇦🇲','Australia':'🇦🇺','Austria':'🇦🇹','Azerbaijan':'🇦🇿',
+  'Bahamas':'🇧🇸','Bahrain':'🇧🇭','Bangladesh':'🇧🇩','Barbados':'🇧🇧','Belarus':'🇧🇾',
+  'Belgium':'🇧🇪','Bolivia':'🇧🇴','Bosnia and Herzegovina':'🇧🇦','Botswana':'🇧🇼','Brazil':'🇧🇷',
+  'Bulgaria':'🇧🇬','Cambodia':'🇰🇭','Cameroon':'🇨🇲','Canada':'🇨🇦','Chile':'🇨🇱',
+  'China':'🇨🇳','Colombia':'🇨🇴','Costa Rica':'🇨🇷','Croatia':'🇭🇷','Cuba':'🇨🇺',
+  'Cyprus':'🇨🇾','Czechia':'🇨🇿','Czech Republic':'🇨🇿','Denmark':'🇩🇰',
+  'Dominican Republic':'🇩🇴','Ecuador':'🇪🇨','Egypt':'🇪🇬','El Salvador':'🇸🇻',
+  'Estonia':'🇪🇪','Ethiopia':'🇪🇹','Fiji':'🇫🇯','Finland':'🇫🇮','France':'🇫🇷',
+  'Georgia':'🇬🇪','Germany':'🇩🇪','Ghana':'🇬🇭','Greece':'🇬🇷','Guatemala':'🇬🇹',
+  'Haiti':'🇭🇹','Honduras':'🇭🇳','Hong Kong':'🇭🇰','Hungary':'🇭🇺','Iceland':'🇮🇸',
+  'India':'🇮🇳','Indonesia':'🇮🇩','Iraq':'🇮🇶','Ireland':'🇮🇪','Israel':'🇮🇱',
+  'Italy':'🇮🇹','Ivory Coast':'🇨🇮','Jamaica':'🇯🇲','Japan':'🇯🇵','Jordan':'🇯🇴',
+  'Kazakhstan':'🇰🇿','Kenya':'🇰🇪','Kosovo':'🇽🇰','Kuwait':'🇰🇼','Kyrgyzstan':'🇰🇬',
+  'Laos':'🇱🇦','Latvia':'🇱🇻','Lebanon':'🇱🇧','Libya':'🇱🇾','Lithuania':'🇱🇹',
+  'Luxembourg':'🇱🇺','Macau':'🇲🇴','Madagascar':'🇲🇬','Malaysia':'🇲🇾','Malta':'🇲🇹',
+  'Mauritius':'🇲🇺','Mexico':'🇲🇽','Moldova':'🇲🇩','Monaco':'🇲🇨','Mongolia':'🇲🇳',
+  'Montenegro':'🇲🇪','Morocco':'🇲🇦','Mozambique':'🇲🇿','Myanmar':'🇲🇲',
+  'Namibia':'🇳🇦','Nepal':'🇳🇵','Netherlands':'🇳🇱','New Zealand':'🇳🇿','Nicaragua':'🇳🇮',
+  'Nigeria':'🇳🇬','North Macedonia':'🇲🇰','Norway':'🇳🇴','Oman':'🇴🇲',
+  'Pakistan':'🇵🇰','Palestine':'🇵🇸','Panama':'🇵🇦','Papua New Guinea':'🇵🇬',
+  'Paraguay':'🇵🇾','Peru':'🇵🇪','Philippines':'🇵🇭','Poland':'🇵🇱','Portugal':'🇵🇹',
+  'Puerto Rico':'🇵🇷','Qatar':'🇶🇦','Romania':'🇷🇴','Russia':'🇷🇺','Rwanda':'🇷🇼',
+  'Saudi Arabia':'🇸🇦','Senegal':'🇸🇳','Serbia':'🇷🇸','Singapore':'🇸🇬','Slovakia':'🇸🇰',
+  'Slovenia':'🇸🇮','South Africa':'🇿🇦','South Korea':'🇰🇷','Spain':'🇪🇸','Sri Lanka':'🇱🇰',
+  'Sweden':'🇸🇪','Switzerland':'🇨🇭','Taiwan':'🇹🇼','Tanzania':'🇹🇿','Thailand':'🇹🇭',
+  'Trinidad and Tobago':'🇹🇹','Tunisia':'🇹🇳','Turkey':'🇹🇷','Türkiye':'🇹🇷',
+  'Uganda':'🇺🇬','Ukraine':'🇺🇦','United Arab Emirates':'🇦🇪','United Kingdom':'🇬🇧',
+  'United States':'🇺🇸','Uruguay':'🇺🇾','Uzbekistan':'🇺🇿','Venezuela':'🇻🇪',
+  'Vietnam':'🇻🇳','Zimbabwe':'🇿🇼',
+  // Aliases
+  'United States of America':'🇺🇸','UK':'🇬🇧','USA':'🇺🇸','UAE':'🇦🇪',
+  'Côte d\'Ivoire':'🇨🇮','Republic of Korea':'🇰🇷',
 };
 const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 let ALL_CITIES=[], ALL_DJS=[], ALL_COUNTRIES=[];
@@ -1358,19 +1392,46 @@ function closeDetail(){
   detailEv=null;
 }
 
-// ── SWIPE RIGHT TO CLOSE DETAIL ───────────────────────────────────────────────
+// ── SWIPE RIGHT TO GO BACK (works on any screen) ─────────────────────────────
 (function(){
   let tx=0,ty=0;
-  const det=document.getElementById('detail');
-  det.addEventListener('touchstart',e=>{
+  document.addEventListener('touchstart',e=>{
     tx=e.touches[0].clientX;
     ty=e.touches[0].clientY;
   },{passive:true});
-  det.addEventListener('touchend',e=>{
+  document.addEventListener('touchend',e=>{
     const dx=e.changedTouches[0].clientX-tx;
     const dy=Math.abs(e.changedTouches[0].clientY-ty);
-    // Swipe right >80px and mostly horizontal (not a vertical scroll)
-    if(dx>80&&dy<60) closeDetail();
+    if(dx<80||dy>60) return; // Not a horizontal swipe
+
+    // Priority 1: Close detail overlay
+    if(document.getElementById('detail').className==='open'){
+      closeDetail(); return;
+    }
+    // Priority 2: Close auth modal
+    const auth=document.getElementById('auth-modal');
+    if(auth&&!auth.classList.contains('hidden')){
+      auth.classList.add('hidden'); return;
+    }
+    // Priority 3: Navigate back in plan steps
+    const planTab=document.getElementById('tab-plan');
+    if(planTab&&planTab.classList.contains('active')){
+      // Events → Month step
+      if(currentStep===2){ goStep(1); return; }
+      // Month → City step
+      if(currentStep===1){ goStep(0); return; }
+      // Inside city view (country selected) → back to countries
+      if(currentStep===0 && selCountry){ clearCountry(); return; }
+      // At country list → go to home tab
+      if(currentStep===0){
+        document.querySelector('.nav-btn').click(); return;
+      }
+    }
+    // Priority 4: From saved/plan tab → go to home tab
+    const activeTab=document.querySelector('.tab.active');
+    if(activeTab&&activeTab.id!=='tab-home'){
+      document.querySelector('.nav-btn').click(); return;
+    }
   },{passive:true});
 })();
 
