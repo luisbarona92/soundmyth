@@ -38,7 +38,7 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const DJ_CACHE_PATH = resolve(__dirname, 'data/dj_images_cache.json');
 const FEST_CACHE_PATH = resolve(__dirname, 'data/festival_images_cache.json');
 
-const CACHE_VERSION = 2; // Bump when search logic improves to force retry of failed lookups
+const CACHE_VERSION = 3; // Bump when search logic improves to force retry of failed lookups
 
 let djCache = {};
 let festCache = {};
@@ -178,10 +178,11 @@ function djNameVariants(name) {
 }
 
 // ── Wikipedia pageimages API (free, no key, good electronic coverage) ──────
+// IMPORTANT: Validates article title matches DJ name to avoid wrong photos
 async function fetchWikipediaImage(name) {
   try {
     const query = `${name} DJ`;
-    const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=1&prop=pageimages&format=json&pithumbsize=400`;
+    const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=3&prop=pageimages&format=json&pithumbsize=400`;
     const res = await fetch(url, {
       headers: { 'User-Agent': 'SoundMyth/1.0 (DJ event aggregator; contact@soundmyth.com)' },
       signal: AbortSignal.timeout(8000),
@@ -189,8 +190,34 @@ async function fetchWikipediaImage(name) {
     const json = await res.json();
     const pages = json.query?.pages;
     if (!pages) return null;
-    const page = Object.values(pages)[0];
-    return page?.thumbnail?.source || null;
+
+    // Normalize DJ name for comparison
+    const normName = name.toLowerCase()
+      .replace(/\s*\(.*\)$/, '')       // strip (official) etc.
+      .replace(/[:!.;]/g, '')
+      .replace(/[øØ]/g, 'o').replace(/[åÅ]/g, 'a').replace(/[ūŪ]/g, 'u')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ').trim();
+
+    // Check all returned pages — pick first whose title matches the DJ name
+    for (const page of Object.values(pages)) {
+      const title = (page.title || '').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[_\-]/g, ' ').trim();
+      const img = page?.thumbnail?.source;
+      if (!img) continue;
+
+      // Title must contain the DJ name OR the DJ name must contain the title
+      // Use the first significant word (≥3 chars) for short/ambiguous names
+      const words = normName.split(' ').filter(w => w.length >= 3);
+      const firstWord = words[0] || normName;
+      const match = title.includes(normName)
+        || normName.includes(title)
+        || (firstWord.length >= 4 && title.includes(firstWord));
+
+      if (match) return img;
+    }
+    return null;
   } catch { return null; }
 }
 
