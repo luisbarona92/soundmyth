@@ -1229,12 +1229,12 @@ function selectDJ(dj){
 function eventRowHTML(ev){
   const{day,mon}=fmtDate(ev.date);
   const isSaved=saved.includes(ev.id);
-  const thumb=countryImg(ev.country);
+  const thumb=ev.img||countryImg(ev.country);
   const todayStr=new Date().toISOString().split('T')[0];
   const isPast=ev.date<todayStr;
   const click=isPast?'':'onclick=\'openDetail('+JSON.stringify(ev.id)+')\'';
   return`<div class="event-row${isPast?' past':''}" ${click}>
-    <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${COUNTRY_IMG_FALLBACK}'"/>
+    <img class="ev-thumb" src="${thumb}" alt="" onerror="this.src='${countryImg(ev.country)}'"/>
     <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
     <div class="ev-divider"></div>
     <div class="ev-info">
@@ -1277,7 +1277,7 @@ function openDetail(id){
   detailEv=ev;
   const{day,mon}=fmtDate(ev.date);
   const days=daysUntil(ev.date);
-  document.getElementById('det-img').src=countryImgHero(ev.country);
+  document.getElementById('det-img').src=ev.img?ev.img.replace(/w=\d+/,'w=800').replace(/h=\d+/,'h=400'):countryImgHero(ev.country);
   document.getElementById('det-genre').textContent=`${ev.genre.toUpperCase()} · ${FLAGS[ev.country]||''} ${ev.city.toUpperCase()}`;
   document.getElementById('det-name').textContent=ev.name;
   document.getElementById('det-venue').textContent=ev.venue;

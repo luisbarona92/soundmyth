@@ -77,6 +77,14 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node dedupe.js
 
+      - name: Enrich event images (DJ photos)
+        continue-on-error: true
+        timeout-minutes: 15
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node enrich-images.js
+
       - name: Purge old events (>15 days)
         timeout-minutes: 5
         env:
