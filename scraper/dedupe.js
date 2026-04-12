@@ -38,13 +38,23 @@ const normVenue = norm;
 const normCity  = norm;
 
 // Check if two venue names are similar enough to be the same place
-// Handles "Ushuaia Ibiza" vs "Ushuaia Ibiza Beach Hotel", "DC-10" vs "DC 10"
+// Handles "Ushuaia Ibiza" vs "Ushuaia Ibiza Beach Hotel", "DC-10" vs "DC 10",
+// "Brunch Electronik France" vs "Brunch Electronik Bordeaux"
 function venueMatch(a, b) {
   const na = norm(a), nb = norm(b);
   if (!na || !nb) return na === nb;
   if (na === nb) return true;
   // One contains the other (for "Amnesia" vs "Amnesia Ibiza")
   if (na.includes(nb) || nb.includes(na)) return true;
+  // Common prefix match: if both share a long prefix (≥10 chars and ≥50% of shorter)
+  // they're likely the same venue with different city/country suffix
+  const shorter = Math.min(na.length, nb.length);
+  let prefix = 0;
+  for (let i = 0; i < shorter; i++) {
+    if (na[i] !== nb[i]) break;
+    prefix++;
+  }
+  if (prefix >= 10 && prefix >= shorter * 0.5) return true;
   return false;
 }
 
@@ -132,12 +142,28 @@ async function main() {
       .replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
   }
 
+  // Extract the real venue from "DJ at Venue" / "DJ @ Venue" patterns
+  // BIT creates entries like "Amelie Lens @ Brunch Electronik Bordeaux"
+  // where both name AND venue fields contain the DJ prefix.
+  function extractRealVenue(name, venue) {
+    // Try extracting venue from name: "DJ at X", "DJ @ X", "DJ pres. X"
+    const nm = (name || '').match(/^.+?\s+(?:at|@|pres\.?)\s+(.+)$/i);
+    // Try cleaning venue field if it also has "DJ @ X" pattern
+    const vm = (venue || '').match(/^.+?\s+(?:at|@|pres\.?)\s+(.+)$/i);
+    return norm(nm ? nm[1] : (vm ? vm[1] : venue));
+  }
+
   // ── Pass 1: Exact key grouping ──
   //   A) Events WITH venue:  (date, venue_norm, city_norm)
   //   B) Events WITHOUT venue (festivals): (date, name_norm, city_norm)
+  //   Also tries extracting "real venue" from "DJ at/@ Venue" patterns
   const groups = new Map();
   for (const ev of allEvents) {
-    const venue = normVenue(ev.venue);
+    const rawVenue = normVenue(ev.venue);
+    const realVenue = extractRealVenue(ev.name, ev.venue);
+    // Use the real venue (stripped of DJ prefix) if it's shorter/cleaner
+    const venue = (realVenue && realVenue.length >= 3 && realVenue.length < rawVenue.length)
+      ? realVenue : rawVenue;
     let key;
     if (venue.length >= 3) {
       key = `venue|${ev.date}|${venue}|${normCity(ev.city)}`;
@@ -170,17 +196,36 @@ async function main() {
 
   // ── Pass 3: Festival consolidation ──
   // BIT creates separate entries per DJ at a festival ("Anyma pres. ÆDEN at Coachella",
-  // "Heineken House Coachella", etc). Consolidate: same date + same city + name contains
-  // a known festival name → merge into one event.
+  // "Heineken House Coachella", etc). Consolidate: same date + same city + name/venue
+  // contains a known festival BASE name → merge into one event.
   console.log('\n  Pass 3: Festival consolidation...');
   const FESTIVALS_PATH = resolve(__dirname, 'data/festivals_all.json');
-  let festNames = [];
+  let festBaseNames = [];
   if (existsSync(FESTIVALS_PATH)) {
     const fests = JSON.parse(readFileSync(FESTIVALS_PATH, 'utf8'));
-    festNames = [...new Set(fests.map(f => f.name.toLowerCase().trim()))].filter(n => n.length >= 5);
+    // Build BOTH full names and base names (strip city/country suffixes)
+    // "Brunch Electronik Barcelona" → base: "brunch electronik"
+    // "Tomorrowland Belgium" → base: "tomorrowland"
+    const fullNames = fests.map(f => norm(f.name)).filter(n => n.length >= 5);
+    const baseNames = new Set();
+    for (const fn of fullNames) {
+      baseNames.add(fn);
+      // Strip last word if it looks like a city/country (≤15 chars, fest name > 8 chars after strip)
+      const words = fn.split(' ');
+      if (words.length >= 2) {
+        const base = words.slice(0, -1).join(' ');
+        if (base.length >= 8) baseNames.add(base);
+        // Also try stripping last 2 words: "brunch electronik bcn" → "brunch electronik"
+        if (words.length >= 3) {
+          const base2 = words.slice(0, -2).join(' ');
+          if (base2.length >= 8) baseNames.add(base2);
+        }
+      }
+    }
+    festBaseNames = [...baseNames].sort((a, b) => b.length - a.length); // longest first
   }
 
-  if (festNames.length) {
+  if (festBaseNames.length) {
     // Index events by date+city
     const byDateCity = new Map();
     for (const [key, evs] of groups) {
@@ -194,8 +239,8 @@ async function main() {
     let festMerged = 0;
     for (const [dc, entries] of byDateCity) {
       if (entries.length < 2) continue;
-      // For each known festival name, check if multiple events reference it
-      for (const fest of festNames) {
+      // For each known festival name (base or full), check if multiple events reference it
+      for (const fest of festBaseNames) {
         const matching = entries.filter(({ ev }) => {
           const n = norm(ev.name);
           const v = norm(ev.venue);
