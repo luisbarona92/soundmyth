@@ -507,6 +507,7 @@ const FLAGS={
   'Uganda':'🇺🇬','Ukraine':'🇺🇦','United Arab Emirates':'🇦🇪','United Kingdom':'🇬🇧',
   'United States':'🇺🇸','Uruguay':'🇺🇾','Uzbekistan':'🇺🇿','Venezuela':'🇻🇪',
   'Vietnam':'🇻🇳','Zimbabwe':'🇿🇼',
+  'Maldives':'🇲🇻','MV':'🇲🇻','Curaçao':'🇨🇼','CW':'🇨🇼','Iran':'🇮🇷',
   // Aliases
   'United States of America':'🇺🇸','UK':'🇬🇧','USA':'🇺🇸','UAE':'🇦🇪',
   'Côte d\'Ivoire':'🇨🇮','Republic of Korea':'🇰🇷',
@@ -982,8 +983,24 @@ const COUNTRY_ISO={
   'Russian Federation':'Russia',
   'Iran, Islamic Republic of':'Iran',
   'Saint Martin':'Saint Martin',
+  // Non-latin / variant names found in Supabase data
+  '日本':'Japan',
+  'Bosnia And Herzegovina':'Bosnia and Herzegovina',
+  'Korea, Republic Of':'South Korea',
+  'Korea, Republic of':'South Korea',
+  'Netherlands Antilles':'Netherlands',
+  'Maldives':'Maldives',
+  'Curacao':'Curaçao',
+  'Curaçao':'Curaçao',
 };
-function normalizeCountry(c){return COUNTRY_ISO[c]||c;}
+// Build case-insensitive index for normalizeCountry
+const _COUNTRY_LOWER={};
+for(const[k,v]of Object.entries(COUNTRY_ISO)) _COUNTRY_LOWER[k.toLowerCase()]=v;
+function normalizeCountry(c){
+  if(!c) return c;
+  const t=c.trim();
+  return COUNTRY_ISO[t]||_COUNTRY_LOWER[t.toLowerCase()]||t;
+}
 
 // ── EUROPEAN COUNTRIES FILTER ─────────────────────────────────────────────────
 const EUROPE=new Set(['Spain','United Kingdom','Germany','France','Netherlands',

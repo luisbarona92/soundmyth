@@ -33,13 +33,16 @@ const COUNTRY_NORM = {
   'UK':                        'United Kingdom',
   'US':                        'United States',
   'USA':                       'United States',
+  'Usa':                       'United States',
   'UAE':                       'United Arab Emirates',
   'EAU':                       'United Arab Emirates',
-  // Full-name variants
+  // Full-name variants found in Supabase
   'United States of America':  'United States',
   'United Kingdom of Great Britain and Northern Ireland': 'United Kingdom',
   'Korea':                     'South Korea',
   'Republic of Korea':         'South Korea',
+  'Korea, Republic Of':        'South Korea',
+  'Korea, Republic of':        'South Korea',
   'Northern Ireland':          'United Kingdom',
   'Czech Republic':            'Czechia',
   'Türkiye':                   'Turkey',
@@ -47,6 +50,9 @@ const COUNTRY_NORM = {
   'Taiwan, Province of China': 'Taiwan',
   'Viet Nam':                  'Vietnam',
   'Russian Federation':        'Russia',
+  '日本':                       'Japan',
+  'Bosnia And Herzegovina':    'Bosnia and Herzegovina',
+  'Netherlands Antilles':      'Netherlands',
 };
 
 // Countries we consider valid (no normalization needed)
@@ -74,6 +80,7 @@ const VALID_COUNTRIES = new Set([
   'Bahrain', 'Oman', 'Saudi Arabia', 'Jordan', 'Iraq', 'Palestine',
   'Nigeria', 'Ghana', 'Tanzania', 'Ethiopia', 'Uganda', 'Senegal',
   'Pakistan', 'Bangladesh', 'Sri Lanka', 'Myanmar', 'Laos', 'Mongolia',
+  'Maldives', 'Curaçao', 'Iran', 'Ivory Coast',
 ]);
 
 // Known cities that might appear inside venue names
