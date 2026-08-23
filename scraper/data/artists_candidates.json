@@ -10,26 +10,6 @@
     "sample": "Bedouin @ Chinois · Ibiza"
   },
   {
-    "name": "Laidlaw",
-    "key": "laidlaw",
-    "events": 4,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "[16th Aug] ➔ FUSE x Brunch Electronik Ibiza ➔ Day + Night · Ibiza"
-  },
-  {
-    "name": "David Morales",
-    "key": "davidmorales",
-    "events": 3,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "David Morales @ Cavo Paradiso · Mykonos"
-  },
-  {
     "name": "Dungeon Meat",
     "key": "dungeonmeat",
     "events": 3,
@@ -41,16 +21,6 @@
     "sample": "Michael Bibi at DC10 · Ibiza"
   },
   {
-    "name": "Elina",
-    "key": "elina",
-    "events": 3,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "[16th Aug] ➔ FUSE x Brunch Electronik Ibiza ➔ Day + Night · Ibiza"
-  },
-  {
     "name": "Gareth Emery",
     "key": "garethemery",
     "events": 3,
@@ -59,6 +29,16 @@
     ],
     "onRA": true,
     "sample": "LSR/CITY @ Concourse Project · Austin"
+  },
+  {
+    "name": "Laidlaw",
+    "key": "laidlaw",
+    "events": 3,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
   },
   {
     "name": "Samuel Deep",
@@ -145,16 +125,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "Antonio Pepe",
-    "key": "antoniopepe",
-    "events": 2,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Ben Klock at Amnesia Ibiza · Ibiza"
-  },
-  {
     "name": "Apollonia",
     "key": "apollonia",
     "events": 2,
@@ -206,14 +176,14 @@
     "sample": "WORSHIP NORTH AMERICA 2026 · Miami"
   },
   {
-    "name": "Frank Storm",
-    "key": "frankstorm",
+    "name": "Elina",
+    "key": "elina",
     "events": 2,
     "sources": [
-      "bandsintown"
+      "ra"
     ],
     "onRA": true,
-    "sample": "MARCO CAROLA PRESENTS MUSIC ON - CLOSING PARTY (PART 1) · Ibiza"
+    "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
   },
   {
     "name": "fumi (DE)",
@@ -299,6 +269,16 @@
     "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
   },
   {
+    "name": "KLOUD",
+    "key": "kloud",
+    "events": 2,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "ARC Music Festival 2026 · Chicago"
+  },
+  {
     "name": "Mella Dee",
     "key": "melladee",
     "events": 2,
@@ -327,28 +307,6 @@
     ],
     "onRA": true,
     "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
-  },
-  {
-    "name": "Neon Graveyard",
-    "key": "neongraveyard",
-    "events": 2,
-    "sources": [
-      "bandsintown",
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Kobosil at 74HALL · Istanbul"
-  },
-  {
-    "name": "NTO",
-    "key": "nto",
-    "events": 2,
-    "sources": [
-      "bandsintown",
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Voodoo Village 2026 · Brussels"
   },
   {
     "name": "PACH",
@@ -390,16 +348,6 @@
     ],
     "onRA": true,
     "sample": "Robin Schulz @ Pacha Ibiza · Ibiza"
-  },
-  {
-    "name": "Romane Santarelli",
-    "key": "romanesantarelli",
-    "events": 2,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "Rossko",
@@ -544,16 +492,6 @@
     "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
   },
   {
-    "name": "808 State",
-    "key": "808state",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "808 State @ index Dublin · Dublin"
-  },
-  {
     "name": "909 RACING TEAM",
     "key": "909racingteam",
     "events": 1,
@@ -592,16 +530,6 @@
     ],
     "onRA": true,
     "sample": "Karrusel 2026 · Copenhagen"
-  },
-  {
-    "name": "Across Boundaries",
-    "key": "acrossboundaries",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "[16th Aug] ➔ FUSE x Brunch Electronik Ibiza ➔ Day + Night · Ibiza"
   },
   {
     "name": "Adela",
@@ -664,16 +592,6 @@
     "sample": "Unreal Stage @Nibirii Festival · Cologne"
   },
   {
-    "name": "Al Ester",
-    "key": "alester",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Terms & Conditions · Detroit"
-  },
-  {
     "name": "Al Twisted",
     "key": "altwisted",
     "events": 1,
@@ -734,16 +652,6 @@
     "sample": "Altın Gün @ Big Night Live · Boston"
   },
   {
-    "name": "Alvaro Medina",
-    "key": "alvaromedina",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Ricardo Villalobos at Amnesia Ibiza · Ibiza"
-  },
-  {
     "name": "Always Late",
     "key": "alwayslate",
     "events": 1,
@@ -794,8 +702,8 @@
     "sample": "FUSE ➔ Malta 2026 · All"
   },
   {
-    "name": "Archie Hamilton",
-    "key": "archiehamilton",
+    "name": "Antonio Pepe",
+    "key": "antoniopepe",
     "events": 1,
     "sources": [
       "bandsintown"
@@ -804,24 +712,14 @@
     "sample": "Alarico at Amnesia Ibiza · Ibiza"
   },
   {
-    "name": "AREA ØNE",
-    "key": "areane",
+    "name": "Archie Hamilton",
+    "key": "archiehamilton",
     "events": 1,
     "sources": [
       "bandsintown"
     ],
     "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
-    "name": "Ares",
-    "key": "ares",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Honey Dijon at Suvilahti · Helsinki"
+    "sample": "Alarico at Amnesia Ibiza · Ibiza"
   },
   {
     "name": "Ariel Zetina",
@@ -1014,16 +912,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "BOMEL",
-    "key": "bomel",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
     "name": "Bondarük",
     "key": "bondaruk",
     "events": 1,
@@ -1102,16 +990,6 @@
     ],
     "onRA": true,
     "sample": "Unreal Stage @Nibirii Festival · Cologne"
-  },
-  {
-    "name": "Cabaret Voltaire",
-    "key": "cabaretvoltaire",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Honey Dijon at Suvilahti · Helsinki"
   },
   {
     "name": "Calcium",
@@ -1202,16 +1080,6 @@
     ],
     "onRA": true,
     "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "CARL BEE",
-    "key": "carlbee",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "GENESI @ Hï Ibiza Club Room, Miss Monique · Ibiza"
   },
   {
     "name": "Carluschka",
@@ -1454,14 +1322,14 @@
     "sample": "Giuseppe Ottaviani at Daresbury · Cheshire West And Chester"
   },
   {
-    "name": "Darude",
-    "key": "darude",
+    "name": "David Morales",
+    "key": "davidmorales",
     "events": 1,
     "sources": [
       "songkick"
     ],
     "onRA": true,
-    "sample": "Darude @ Q Nightclub · Seattle"
+    "sample": "David Morales @ Amnesia Ibiza · Ibiza"
   },
   {
     "name": "David Rust",
@@ -1622,16 +1490,6 @@
     ],
     "onRA": true,
     "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "DJ Hyperdrive",
-    "key": "djhyperdrive",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "SPFDJ at Magazine London · London"
   },
   {
     "name": "DJ Lady D",
@@ -1894,16 +1752,6 @@
     "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
-    "name": "Emma B",
-    "key": "emmab",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
     "name": "Enaly",
     "key": "enaly",
     "events": 1,
@@ -2094,6 +1942,16 @@
     "sample": "Ricardo Villalobos at Amnesia Ibiza · Ibiza"
   },
   {
+    "name": "Frank Storm",
+    "key": "frankstorm",
+    "events": 1,
+    "sources": [
+      "bandsintown"
+    ],
+    "onRA": true,
+    "sample": "MARCO CAROLA PRESENTS MUSIC ON - CLOSING PARTY (PART 1) · Ibiza"
+  },
+  {
     "name": "Franky Wah",
     "key": "frankywah",
     "events": 1,
@@ -2102,16 +1960,6 @@
     ],
     "onRA": true,
     "sample": "Giuseppe Ottaviani at Daresbury · Cheshire West And Chester"
-  },
-  {
-    "name": "Frederika",
-    "key": "frederika",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "G Jones",
@@ -2324,16 +2172,6 @@
     "sample": "Unreal Stage @Nibirii Festival · Cologne"
   },
   {
-    "name": "Halfpipe Records",
-    "key": "halfpiperecords",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
     "name": "Halogenix",
     "key": "halogenix",
     "events": 1,
@@ -2372,16 +2210,6 @@
     ],
     "onRA": true,
     "sample": "Hayden James @ Savaya · Bali"
-  },
-  {
-    "name": "Hazmat Live",
-    "key": "hazmatlive",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Terms & Conditions · Detroit"
   },
   {
     "name": "Hemi",
@@ -2502,16 +2330,6 @@
     ],
     "onRA": true,
     "sample": "Ian Asher @ Big Night Live · Boston"
-  },
-  {
-    "name": "Identified Patient",
-    "key": "identifiedpatient",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Francesco Del Garda @ The Garden Resort · Tisno"
   },
   {
     "name": "II FACES",
@@ -3044,16 +2862,6 @@
     "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
-    "name": "KLOUD",
-    "key": "kloud",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Klubfiller",
     "key": "klubfiller",
     "events": 1,
@@ -3194,16 +3002,6 @@
     "sample": "Unreal Stage @Nibirii Festival · Cologne"
   },
   {
-    "name": "Levi (AU)",
-    "key": "leviau",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "LEVI - Las Vegas, NV · Las Vegas"
-  },
-  {
     "name": "Levt",
     "key": "levt",
     "events": 1,
@@ -3302,16 +3100,6 @@
     ],
     "onRA": true,
     "sample": "CUE - Liverpool w. bullet tooth, Laidlaw · Liverpool"
-  },
-  {
-    "name": "Lykke Li",
-    "key": "lykkeli",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Honey Dijon at Suvilahti · Helsinki"
   },
   {
     "name": "LYNE",
@@ -3504,16 +3292,6 @@
     "sample": "FUSE ➔ Malta 2026 · All"
   },
   {
-    "name": "MATRAKK",
-    "key": "matrakk",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
     "name": "Matt Proxy",
     "key": "mattproxy",
     "events": 1,
@@ -3522,16 +3300,6 @@
     ],
     "onRA": true,
     "sample": "jpegmafia @ Echostage · Washington"
-  },
-  {
-    "name": "Max Mash",
-    "key": "maxmash",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "Maxi Meraki",
@@ -3662,16 +3430,6 @@
     ],
     "onRA": true,
     "sample": "Unreal Stage @Nibirii Festival · Cologne"
-  },
-  {
-    "name": "Mindset",
-    "key": "mindset",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "EAZYBAKED @ Concourse Project · Austin"
   },
   {
     "name": "Miss I",
@@ -3844,6 +3602,16 @@
     "sample": "Dual Damage Present: Built2Break · Liverpool"
   },
   {
+    "name": "Neon Graveyard",
+    "key": "neongraveyard",
+    "events": 1,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "Unreal Stage @Nibirii Festival · Cologne"
+  },
+  {
     "name": "Neonlight",
     "key": "neonlight",
     "events": 1,
@@ -3954,14 +3722,14 @@
     "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
-    "name": "Nu Genea",
-    "key": "nugenea",
+    "name": "NTO",
+    "key": "nto",
     "events": 1,
     "sources": [
-      "bandsintown"
+      "ra"
     ],
     "onRA": true,
-    "sample": "Honey Dijon at Suvilahti · Helsinki"
+    "sample": "Voodoo Village 2026 · Brussels"
   },
   {
     "name": "NYRA (DE)",
@@ -4032,16 +3800,6 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
-  },
-  {
-    "name": "Olympe4000",
-    "key": "olympe4000",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "Omeria",
@@ -4124,16 +3882,6 @@
     "sample": "Dimensions Festival 2026 - Regional After Parties · All"
   },
   {
-    "name": "Panteros666",
-    "key": "panteros666",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
     "name": "Paperwater",
     "key": "paperwater",
     "events": 1,
@@ -4194,16 +3942,6 @@
     "sample": "Amplify at Insomnia Festival · Sao Giao"
   },
   {
-    "name": "Perish",
-    "key": "perish",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Terms & Conditions · Detroit"
-  },
-  {
     "name": "PHILOU",
     "key": "philou",
     "events": 1,
@@ -4232,16 +3970,6 @@
     ],
     "onRA": true,
     "sample": "Jackies Lisboa House Music Festival 2026 - Chris Stussy & Desiree · Li"
-  },
-  {
-    "name": "PinkPantheress",
-    "key": "pinkpantheress",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Honey Dijon at Suvilahti · Helsinki"
   },
   {
     "name": "Pinotello",
@@ -4334,36 +4062,6 @@
     "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
-    "name": "Radar",
-    "key": "radar",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
-    "name": "Radio Cargo",
-    "key": "radiocargo",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
-  },
-  {
-    "name": "Rampage",
-    "key": "rampage",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Approximate Running Times - Doors - 8:00 PM . · Brisbane"
-  },
-  {
     "name": "Rampue",
     "key": "rampue",
     "events": 1,
@@ -4372,16 +4070,6 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
-  },
-  {
-    "name": "Raphael Palacci",
-    "key": "raphaelpalacci",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "Raye",
@@ -4574,6 +4262,16 @@
     "sample": "Experts Only Festival 2026 · New York City"
   },
   {
+    "name": "Romane Santarelli",
+    "key": "romanesantarelli",
+    "events": 1,
+    "sources": [
+      "bandsintown"
+    ],
+    "onRA": true,
+    "sample": "Novah at Palexpo · Le Grand-Saconnex"
+  },
+  {
     "name": "Ron Trent",
     "key": "rontrent",
     "events": 1,
@@ -4754,16 +4452,6 @@
     "sample": "Dissonanze Festival · Rome"
   },
   {
-    "name": "SG Lewis",
-    "key": "sglewis",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "SG Lewis @ Ruins, Knockdown Center · Queens"
-  },
-  {
     "name": "Shakèd",
     "key": "shaked",
     "events": 1,
@@ -4792,16 +4480,6 @@
     ],
     "onRA": true,
     "sample": "Karrusel 2026 · Copenhagen"
-  },
-  {
-    "name": "Shlømo",
-    "key": "shlmo",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "Sim0ne",
@@ -4852,16 +4530,6 @@
     ],
     "onRA": true,
     "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Sköne",
-    "key": "skone",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Electrolapse 2026 · Saint-Sorlin-En-Valloire"
   },
   {
     "name": "snoritz",
@@ -4932,16 +4600,6 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
-  },
-  {
-    "name": "Steve Bicknell",
-    "key": "stevebicknell",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Steve Bicknell @ Tresor · Berlin"
   },
   {
     "name": "Steve Roach",
@@ -5024,16 +4682,6 @@
     "sample": "Unreal Stage @Nibirii Festival · Cologne"
   },
   {
-    "name": "Taylor Monai",
-    "key": "taylormonai",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Terms & Conditions · Detroit"
-  },
-  {
     "name": "Terra",
     "key": "terra",
     "events": 1,
@@ -5082,16 +4730,6 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
-  },
-  {
-    "name": "Thylacine",
-    "key": "thylacine",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "V and B Fest' 2026 · Chateau Gontier Sur Mayenne"
   },
   {
     "name": "Ti Es",
@@ -5284,16 +4922,6 @@
     "sample": "Luke Slater at Melkweg · Amsterdam"
   },
   {
-    "name": "Violin Girl",
-    "key": "violingirl",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Sirocco Sessions: After Dark Boston · Boston"
-  },
-  {
     "name": "Viridity",
     "key": "viridity",
     "events": 1,
@@ -5422,16 +5050,6 @@
     ],
     "onRA": true,
     "sample": "FUSE ➔ Malta 2026 · All"
-  },
-  {
-    "name": "Xan Bishop",
-    "key": "xanbishop",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Terms & Conditions · Detroit"
   },
   {
     "name": "XDB",
