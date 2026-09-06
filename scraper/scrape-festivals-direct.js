@@ -98,14 +98,24 @@ function extractFestivalEvent(html, fest) {
   }
 
   // 2. Fallback: find upcoming ISO dates in HTML
-  const rawDates = (html.match(/20\d{2}-\d{2}-\d{2}/g) || [])
-    .filter(d => d >= TODAY)
-    .sort();
+  // Only accept dates that appear near event-relevant keywords
+  const eventKeywords = /\b(date|festival|edition|event|ticket|lineup|stage|schedule|when|opens?|starts?)\b/i;
+  const noisePatterns = /copyright|©|\blast.?modified\b|<meta[^>]+modified/i;
 
-  if (!rawDates.length) return null;
+  const rawDates = (html.match(/20\d{2}-\d{2}-\d{2}/g) || []);
+  const validDates = rawDates.filter(d => {
+    if (d < TODAY) return false;
+    const idx = html.indexOf(d);
+    if (idx === -1) return true; // can't check, keep
+    const ctx = html.slice(Math.max(0, idx - 200), idx + 200);
+    if (noisePatterns.test(ctx)) return false; // skip noise dates
+    return true; // keep if no noise signal (even without keyword — reduces false negatives)
+  }).sort();
 
-  // Take the earliest upcoming date
-  const startDate = rawDates[0];
+  if (!validDates.length) return null;
+
+  // Take the earliest valid future date
+  const startDate = validDates[0];
 
   // Try og:image for the festival image
   const ogImg = html.match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/i)?.[1] || '';

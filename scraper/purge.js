@@ -79,14 +79,56 @@ async function main() {
   }
 
   // Also purge orphan saved_events (user bookmarks pointing to deleted events)
-  const { count: orphanCount, error: orphanCountErr } = await sb
-    .from('saved_events')
-    .select('id', { count: 'exact', head: true })
-    .not('event_id', 'in', `(select id from events)`);
-
-  // Simple approach: just delete saved_events where the event no longer exists
-  // (Supabase cascade would handle this if FK is set — but just in case)
   console.log(`\n🧹  Checking orphan saved_events…`);
+
+  try {
+    // Step 1: get all valid event ids (paginated if large, but events table is small)
+    let validEvents = [];
+    let from = 0;
+    while (true) {
+      const { data, error } = await sb.from('events').select('id').range(from, from + 999);
+      if (error) { console.error('  ❌  Error fetching events:', error.message); break; }
+      validEvents = validEvents.concat(data || []);
+      if (!data || data.length < 1000) break;
+      from += 1000;
+    }
+    const validIds = new Set((validEvents || []).map(e => e.id));
+
+    // Step 2: get all saved_events
+    let allSavedEvents = [];
+    from = 0;
+    while (true) {
+      const { data, error } = await sb.from('saved_events').select('id, event_id').range(from, from + 999);
+      if (error) { console.error('  ❌  Error fetching saved_events:', error.message); break; }
+      allSavedEvents = allSavedEvents.concat(data || []);
+      if (!data || data.length < 1000) break;
+      from += 1000;
+    }
+
+    // Step 3: find orphans
+    const orphanIds = (allSavedEvents || []).filter(s => !validIds.has(s.event_id)).map(s => s.id);
+
+    // Step 4: delete orphans in batches
+    if (orphanIds.length > 0) {
+      let orphanDeleted = 0;
+      for (let i = 0; i < orphanIds.length; i += 100) {
+        const { error: delErr, count: batchCount } = await sb
+          .from('saved_events')
+          .delete({ count: 'exact' })
+          .in('id', orphanIds.slice(i, i + 100));
+        if (delErr) {
+          console.error('  ❌  Orphan delete error:', delErr.message);
+        } else {
+          orphanDeleted += batchCount || 0;
+        }
+      }
+      console.log(`  ✓ Deleted ${orphanDeleted} orphaned saved_events rows`);
+    } else {
+      console.log(`  ✓ No orphaned saved_events found`);
+    }
+  } catch (err) {
+    console.error('  ❌  Orphan cleanup error:', err.message);
+  }
 
   console.log('\n╔══════════════════════════════════════════╗');
   console.log(`║  Purge complete  →  ${String(deleted).padEnd(18)} deleted ║`);
