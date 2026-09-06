@@ -296,7 +296,11 @@ async function main() {
     const isFestEntry = (entry) => (entry.ev.tags || []).includes('festival');
     const festKey = (entry) => {
       const n = norm(entry.ev.name), v = norm(entry.ev.venue);
-      const base = festBaseNames.find(fb => n.includes(fb) || v.includes(fb)) || '';
+      const base = festBaseNames.find(fb => n.includes(fb) || v.includes(fb));
+      if (!base) {
+        // unknown festival — use normalized name to avoid over-merging
+        return `festival|${n}|${normCity(entry.ev.city)}`;
+      }
       return `festival|${base}|${normCity(entry.ev.city)}`;
     };
 
