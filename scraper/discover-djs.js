@@ -30,11 +30,18 @@ import { pickCanon }               from './normalize.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const readJ = p => { try { return JSON.parse(readFileSync(resolve(__dirname, p), 'utf8')); } catch { return []; } };
 
-// Anon read of the public events table (same key the frontend uses — no secrets needed).
-const html   = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
-const SB_URL = (html.match(/SB_URL\s*=\s*['"]([^'"]+)['"]/) || [])[1];
-const SB_KEY = (html.match(/SB_KEY\s*=\s*['"]([^'"]+)['"]/) || [])[1];
-if (!SB_URL || !SB_KEY) { console.error('❌  Could not read SB_URL / SB_KEY from ../index.html'); process.exit(1); }
+// Anon read of the public events table.
+// Prefer env vars (SUPABASE_URL + SUPABASE_ANON_KEY, set as GitHub Secrets) so this
+// script doesn't depend on parsing index.html. Falls back to the regex if the env
+// vars are absent (local runs, or before the secret is added to the repo).
+let SB_URL = process.env.SUPABASE_URL;
+let SB_KEY = process.env.SUPABASE_ANON_KEY;
+if (!SB_URL || !SB_KEY) {
+  const html = readFileSync(resolve(__dirname, '../index.html'), 'utf8');
+  SB_URL = SB_URL || (html.match(/SB_URL\s*=\s*['"]([^'"]+)['"]/) || [])[1];
+  SB_KEY = SB_KEY || (html.match(/SB_KEY\s*=\s*['"]([^'"]+)['"]/) || [])[1];
+}
+if (!SB_URL || !SB_KEY) { console.error('❌  Could not resolve SUPABASE_URL / SUPABASE_ANON_KEY (set env vars or check index.html)'); process.exit(1); }
 const sb    = createClient(SB_URL, SB_KEY, { auth: { persistSession: false } });
 const TODAY = new Date().toISOString().split('T')[0];
 

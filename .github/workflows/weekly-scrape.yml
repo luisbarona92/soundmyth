@@ -13,7 +13,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 120   # DJ scrape (~20m) + image enrichment (~16m) sit close to the old 65m cap
+    timeout-minutes: 150   # step budgets sum to ~159m; 150 gives real headroom as DJ list grows
 
     defaults:
       run:
@@ -95,7 +95,12 @@ jobs:
         # Reads events (anon) + verifies non-list DJs on Resident Advisor, writes
         # data/artists_candidates.json. Incremental: only NEW DJs hit RA (cache =
         # committed candidates file). cleanup-junk keeps events whose bill has a
-        # listed DJ OR an onRA candidate. No secrets (anon key + ra.co only).
+        # listed DJ OR an onRA candidate.
+        # SUPABASE_URL + SUPABASE_ANON_KEY passed explicitly so the script doesn't
+        # need to parse index.html via regex (fragile if variable names change).
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: node discover-djs.js
 
       - name: Clean mislabelled junk events
