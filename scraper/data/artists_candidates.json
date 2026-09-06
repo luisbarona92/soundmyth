@@ -2,7 +2,7 @@
   {
     "name": "Bedouin",
     "key": "bedouin",
-    "events": 6,
+    "events": 5,
     "sources": [
       "songkick"
     ],
@@ -72,17 +72,6 @@
     "sample": "Michael Bibi at DC10 · Ibiza"
   },
   {
-    "name": "WhoMadeWho",
-    "key": "whomadewho",
-    "events": 3,
-    "sources": [
-      "ra",
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Aline Umber",
     "key": "alineumber",
     "events": 2,
@@ -145,16 +134,6 @@
     "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
   },
   {
-    "name": "fumi (DE)",
-    "key": "fumide",
-    "events": 2,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Ignez",
     "key": "ignez",
     "events": 2,
@@ -207,16 +186,6 @@
     "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
   },
   {
-    "name": "KLOUD",
-    "key": "kloud",
-    "events": 2,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Mungo's Hi Fi",
     "key": "mungoshifi",
     "events": 2,
@@ -257,6 +226,16 @@
     "sample": "FUSE 18th Birthday w/ Enzo Siragusa, Luciano, Rossi., Reeshy, Sweely, "
   },
   {
+    "name": "Paranoid London",
+    "key": "paranoidlondon",
+    "events": 2,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "Acid Ballroom: Paranoid London · Leeds"
+  },
+  {
     "name": "Reeshy",
     "key": "reeshy",
     "events": 2,
@@ -288,16 +267,6 @@
     "sample": "Marco Carola at DC10 · Ibiza"
   },
   {
-    "name": "Saint Ludo",
-    "key": "saintludo",
-    "events": 2,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
     "name": "San Holo",
     "key": "sanholo",
     "events": 2,
@@ -306,16 +275,6 @@
     ],
     "onRA": true,
     "sample": "San Holo @ Echostage · Washington"
-  },
-  {
-    "name": "Son of Son",
-    "key": "sonofson",
-    "events": 2,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Sweely",
@@ -358,16 +317,6 @@
     "sample": "ZHU @ Concourse Project · Austin"
   },
   {
-    "name": "[IVY]",
-    "key": "ivy",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "1991 (UK)",
     "key": "1991uk",
     "events": 1,
@@ -376,16 +325,6 @@
     ],
     "onRA": true,
     "sample": "WORSHIP NORTH AMERICA 2026 · Miami"
-  },
-  {
-    "name": "619!",
-    "key": "619",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
   },
   {
     "name": "A.D.H.S.",
@@ -398,24 +337,14 @@
     "sample": "Feiern wie früher, nur früher by Anna Reusch & Thomas Schumacher · Col"
   },
   {
-    "name": "Adela",
-    "key": "adela",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "Afonso Peixoto",
-    "key": "afonsopeixoto",
+    "name": "Adam F",
+    "key": "adamf",
     "events": 1,
     "sources": [
       "ra"
     ],
     "onRA": true,
-    "sample": "Hungry4 ps. Mall Grab (extended set) Under The Bridge - Open Air · Lis"
+    "sample": "SubHarmonic: Adam F [LIVE] - Circles Revisited Tour · Liverpool"
   },
   {
     "name": "Agustin Giri",
@@ -468,16 +397,6 @@
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
   },
   {
-    "name": "Alix Perez",
-    "key": "alixperez",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Altın Gün",
     "key": "altngun",
     "events": 1,
@@ -508,16 +427,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Anané",
-    "key": "anane",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Michael Shannon @ KOKO · London"
-  },
-  {
     "name": "Anna Reusch",
     "key": "annareusch",
     "events": 1,
@@ -546,16 +455,6 @@
     ],
     "onRA": true,
     "sample": "FUSE ➔ Malta 2026 · All"
-  },
-  {
-    "name": "Ariel Zetina",
-    "key": "arielzetina",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
   },
   {
     "name": "Arlo",
@@ -618,36 +517,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "Banchan",
-    "key": "banchan",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Baran Kok",
-    "key": "barankok",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Kygo at Olympiapark Süd · Munich"
-  },
-  {
-    "name": "Basstripper",
-    "key": "basstripper",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Bella Backe",
     "key": "bellabacke",
     "events": 1,
@@ -676,16 +545,6 @@
     ],
     "onRA": true,
     "sample": "Dissonanze Festival · Rome"
-  },
-  {
-    "name": "Berrakka",
-    "key": "berrakka",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
   },
   {
     "name": "Big Gigantic",
@@ -738,16 +597,6 @@
     "sample": "Bradeazy @ Bauhaus · Houston"
   },
   {
-    "name": "Break",
-    "key": "break",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Burnski",
     "key": "burnski",
     "events": 1,
@@ -756,16 +605,6 @@
     ],
     "onRA": true,
     "sample": "Jeff Mills at Amnesia Ibiza · Ibiza"
-  },
-  {
-    "name": "Bushbaby",
-    "key": "bushbaby",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Calcium",
@@ -808,16 +647,6 @@
     "sample": "Hixxy @ Ministry of Sound · London"
   },
   {
-    "name": "Calyx",
-    "key": "calyx",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Camilo Franco",
     "key": "camilofranco",
     "events": 1,
@@ -826,26 +655,6 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
-  },
-  {
-    "name": "camoufly",
-    "key": "camoufly",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "canary yellow",
-    "key": "canaryyellow",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Cap",
@@ -858,26 +667,6 @@
     "sample": "FUSE ➔ Malta 2026 · All"
   },
   {
-    "name": "Cardinals",
-    "key": "cardinals",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "Carluschka",
-    "key": "carluschka",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Hungry4 ps. Mall Grab (extended set) Under The Bridge - Open Air · Lis"
-  },
-  {
     "name": "Cassy",
     "key": "cassy",
     "events": 1,
@@ -886,36 +675,6 @@
     ],
     "onRA": true,
     "sample": "EndUp presents - Cassy · Cork"
-  },
-  {
-    "name": "Chaos In The CBD",
-    "key": "chaosinthecbd",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Charli xcx",
-    "key": "charlixcx",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "Charlie Tee",
-    "key": "charlietee",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Chris Watson",
@@ -938,16 +697,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "Cole Knight",
-    "key": "coleknight",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "CRITICAL ERROR 404",
     "key": "criticalerror404",
     "events": 1,
@@ -956,36 +705,6 @@
     ],
     "onRA": true,
     "sample": "BCCO with Yanamaste, future.666  · Cologne"
-  },
-  {
-    "name": "Crossy",
-    "key": "crossy",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Cuba (PT)",
-    "key": "cubapt",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Hungry4 ps. Mall Grab (extended set) Under The Bridge - Open Air · Lis"
-  },
-  {
-    "name": "Dabura",
-    "key": "dabura",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Dan Ghenacia",
@@ -1058,26 +777,6 @@
     "sample": "Dissonanze Festival · Rome"
   },
   {
-    "name": "Darude",
-    "key": "darude",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Darude · All"
-  },
-  {
-    "name": "David Morales",
-    "key": "davidmorales",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "David Morales @ Amnesia Ibiza · Ibiza"
-  },
-  {
     "name": "De La Swing",
     "key": "delaswing",
     "events": 1,
@@ -1098,26 +797,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Derrick Carter",
-    "key": "derrickcarter",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Desert Hearts",
-    "key": "deserthearts",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Desert Hearts @ Ductwork at Silo Dallas · Dallas"
-  },
-  {
     "name": "DESIREE (RSA)",
     "key": "desireersa",
     "events": 1,
@@ -1128,36 +807,6 @@
     "sample": "Jackies Lisboa House Music Festival 2026 - Chris Stussy & Desiree · Li"
   },
   {
-    "name": "Diagnostix",
-    "key": "diagnostix",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Diffrent",
-    "key": "diffrent",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Creamfields 2026 · Warrington"
-  },
-  {
-    "name": "Dillinja",
-    "key": "dillinja",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Dimension",
     "key": "dimension",
     "events": 1,
@@ -1166,16 +815,6 @@
     ],
     "onRA": true,
     "sample": "WORSHIP NORTH AMERICA 2026 · Miami"
-  },
-  {
-    "name": "DJ Colette",
-    "key": "djcolette",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "DJ Godfather",
@@ -1198,36 +837,6 @@
     "sample": "DJ Habibeats @ Big Night Live · Boston"
   },
   {
-    "name": "DJ Heather",
-    "key": "djheather",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "DJ Hyperactive",
-    "key": "djhyperactive",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "DJ Lady D",
-    "key": "djladyd",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "DJ Mell G",
     "key": "djmellg",
     "events": 1,
@@ -1246,16 +855,6 @@
     ],
     "onRA": true,
     "sample": "Jeff Mills at Amnesia Ibiza · Ibiza"
-  },
-  {
-    "name": "DJ Vibe",
-    "key": "djvibe",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Hungry4 ps. Mall Grab (extended set) Under The Bridge - Open Air · Lis"
   },
   {
     "name": "Dj Vibes",
@@ -1328,16 +927,6 @@
     "sample": "CUE - Liverpool w. bullet tooth, Laidlaw · Liverpool"
   },
   {
-    "name": "Dread MC",
-    "key": "dreadmc",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Dual Damage",
     "key": "dualdamage",
     "events": 1,
@@ -1348,16 +937,6 @@
     "sample": "Dual Damage: Built2Break · Liverpool"
   },
   {
-    "name": "Dunes of Dawn",
-    "key": "dunesofdawn",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Dusky",
     "key": "dusky",
     "events": 1,
@@ -1366,6 +945,16 @@
     ],
     "onRA": true,
     "sample": "Dusky @ Shelter Amsterdam · Amsterdam"
+  },
+  {
+    "name": "E-Boo",
+    "key": "eboo",
+    "events": 1,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "Acid Ballroom: Paranoid London · Leeds"
   },
   {
     "name": "Edele Andaya",
@@ -1408,16 +997,6 @@
     "sample": "Marco Faraone at Amnesia Ibiza · Ibiza"
   },
   {
-    "name": "Emily Makis",
-    "key": "emilymakis",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Enrica Falqui",
     "key": "enricafalqui",
     "events": 1,
@@ -1426,16 +1005,6 @@
     ],
     "onRA": true,
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
-  },
-  {
-    "name": "Envy",
-    "key": "envy",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Enzo is Burning",
@@ -1456,16 +1025,6 @@
     ],
     "onRA": true,
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
-  },
-  {
-    "name": "Faithless",
-    "key": "faithless",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Creamfields 2026 · Warrington"
   },
   {
     "name": "Fat Freddy's Drop",
@@ -1508,26 +1067,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Flava D",
-    "key": "flavad",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Flores Negras",
-    "key": "floresnegras",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Franco Cinelli",
     "key": "francocinelli",
     "events": 1,
@@ -1548,6 +1087,16 @@
     "sample": "MARCO CAROLA PRESENTS MUSIC ON - CLOSING PARTY (PART 1) · Ibiza"
   },
   {
+    "name": "fumi (DE)",
+    "key": "fumide",
+    "events": 1,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "Sara Landry · Miami"
+  },
+  {
     "name": "Gabbs",
     "key": "gabbs",
     "events": 1,
@@ -1556,16 +1105,6 @@
     ],
     "onRA": true,
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
-  },
-  {
-    "name": "Gardna",
-    "key": "gardna",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Garrett David",
@@ -1628,16 +1167,6 @@
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
   },
   {
-    "name": "GLXY",
-    "key": "glxy",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "GNMR",
     "key": "gnmr",
     "events": 1,
@@ -1656,16 +1185,6 @@
     ],
     "onRA": true,
     "sample": "Ministry of Rave Prague · Prague"
-  },
-  {
-    "name": "Grafix",
-    "key": "grafix",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Graham Gold",
@@ -1698,16 +1217,6 @@
     "sample": "GRAVAGERZ @ Time Nightclub · Costa Mesa"
   },
   {
-    "name": "Halogenix",
-    "key": "halogenix",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Hamish & Toby",
     "key": "hamishandtoby",
     "events": 1,
@@ -1718,14 +1227,14 @@
     "sample": "FUSE ➔ Malta 2026 · All"
   },
   {
-    "name": "Harriet Jaxxon",
-    "key": "harrietjaxxon",
+    "name": "Harry Shotta",
+    "key": "harryshotta",
     "events": 1,
     "sources": [
-      "bandsintown"
+      "ra"
     ],
     "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
+    "sample": "SubHarmonic: Adam F [LIVE] - Circles Revisited Tour · Liverpool"
   },
   {
     "name": "Hayden James",
@@ -1746,16 +1255,6 @@
     ],
     "onRA": true,
     "sample": "Sara Landry · Miami"
-  },
-  {
-    "name": "Hiroko Yamamura",
-    "key": "hirokoyamamura",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Hitam",
@@ -1788,16 +1287,6 @@
     "sample": "Harbourlife 2026 · Sydney"
   },
   {
-    "name": "HOTPRETTY",
-    "key": "hotpretty",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Ian Asher",
     "key": "ianasher",
     "events": 1,
@@ -1818,36 +1307,6 @@
     "sample": "MARCO CAROLA PRESENTS MUSIC ON · Ibiza"
   },
   {
-    "name": "Ikkimel",
-    "key": "ikkimel",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Kygo at Olympiapark Süd · Munich"
-  },
-  {
-    "name": "IMANU",
-    "key": "imanu",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "In Parallel",
-    "key": "inparallel",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
     "name": "Infinity Ink",
     "key": "infinityink",
     "events": 1,
@@ -1856,16 +1315,6 @@
     ],
     "onRA": true,
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
-  },
-  {
-    "name": "INVT",
-    "key": "invt",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "IRIDE",
@@ -1888,44 +1337,14 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Ivy Lab",
-    "key": "ivylab",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "JACK MARLOW",
-    "key": "jackmarlow",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "Jäde",
-    "key": "jade",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "Jade Seatle",
-    "key": "jadeseatle",
+    "name": "Jake Rollinson",
+    "key": "jakerollinson",
     "events": 1,
     "sources": [
       "ra"
     ],
     "onRA": true,
-    "sample": "Dimensions Festival 2026 - Barbarellas Closing Party · All"
+    "sample": "Acid Ballroom: Paranoid London · Leeds"
   },
   {
     "name": "James Lavelle",
@@ -1936,26 +1355,6 @@
     ],
     "onRA": true,
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
-  },
-  {
-    "name": "Jane Remover",
-    "key": "janeremover",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
-    "name": "Janesita",
-    "key": "janesita",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Jaymod",
@@ -1976,16 +1375,6 @@
     ],
     "onRA": true,
     "sample": "Dissonanze Festival · Rome"
-  },
-  {
-    "name": "Jean Mauj",
-    "key": "jeanmauj",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Hungry4 ps. Mall Grab (extended set) Under The Bridge - Open Air · Lis"
   },
   {
     "name": "Jeremy Olander",
@@ -2048,16 +1437,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "Jonny From Space",
-    "key": "jonnyfromspace",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
-  },
-  {
     "name": "Jordan Brando",
     "key": "jordanbrando",
     "events": 1,
@@ -2066,26 +1445,6 @@
     ],
     "onRA": true,
     "sample": "Harbourlife 2026 · Sydney"
-  },
-  {
-    "name": "Joy Orbison",
-    "key": "joyorbison",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Jubilee",
-    "key": "jubilee",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
   },
   {
     "name": "Julian Mesa",
@@ -2128,16 +1487,6 @@
     "sample": "ANNĒ - Ben Klock - BONDARŨK - JXXXO - Pampa - Setaoc Mass - + Under Cl"
   },
   {
-    "name": "K Motionz",
-    "key": "kmotionz",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Kamelot",
     "key": "kamelot",
     "events": 1,
@@ -2146,26 +1495,6 @@
     ],
     "onRA": true,
     "sample": "Kamelot @ Razzmatazz · Barcelona"
-  },
-  {
-    "name": "Kasia (OFC)",
-    "key": "kasiaofc",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Kasra",
-    "key": "kasra",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Katy Rough",
@@ -2198,24 +1527,14 @@
     "sample": "Kelsey Lu @ KOKO · London"
   },
   {
-    "name": "Kings of the Rollers",
-    "key": "kingsoftherollers",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Kirk (US)",
-    "key": "kirkus",
+    "name": "KLOUD",
+    "key": "kloud",
     "events": 1,
     "sources": [
       "ra"
     ],
     "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
+    "sample": "KLOUD inside NOIR · Toronto"
   },
   {
     "name": "Klubfiller",
@@ -2226,16 +1545,6 @@
     ],
     "onRA": true,
     "sample": "Hixxy @ Ministry of Sound · London"
-  },
-  {
-    "name": "Kneecap",
-    "key": "kneecap",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
   },
   {
     "name": "Kollektiv Ost",
@@ -2268,16 +1577,6 @@
     "sample": "Lagos @ Razzmatazz · Barcelona"
   },
   {
-    "name": "Lamb",
-    "key": "lamb",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
     "name": "Laure Croft",
     "key": "laurecroft",
     "events": 1,
@@ -2288,16 +1587,6 @@
     "sample": "Cloudy at Istanbul Congress Center · Istanbul"
   },
   {
-    "name": "Laurence Guy",
-    "key": "laurenceguy",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Lee Foss",
     "key": "leefoss",
     "events": 1,
@@ -2306,16 +1595,6 @@
     ],
     "onRA": true,
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
-  },
-  {
-    "name": "Lee Reynolds",
-    "key": "leereynolds",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Desert Hearts @ Ductwork at Silo Dallas · Dallas"
   },
   {
     "name": "Lefto Early Bird",
@@ -2338,26 +1617,6 @@
     "sample": "VERKNIPT Poland - Warsaw · Warsaw"
   },
   {
-    "name": "Lil' Louis",
-    "key": "lillouis",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Lindsey Herbert",
-    "key": "lindseyherbert",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Liou",
     "key": "liou",
     "events": 1,
@@ -2366,16 +1625,6 @@
     ],
     "onRA": true,
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
-  },
-  {
-    "name": "Louie Vega",
-    "key": "louievega",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Michael Shannon @ KOKO · London"
   },
   {
     "name": "Loukeman",
@@ -2396,26 +1645,6 @@
     ],
     "onRA": true,
     "sample": "CUE - Liverpool w. bullet tooth, Laidlaw · Liverpool"
-  },
-  {
-    "name": "M3RCH",
-    "key": "m3rch",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Madeline (Chi)",
-    "key": "madelinechi",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Madman",
@@ -2458,16 +1687,6 @@
     "sample": "MARCO CAROLA PRESENTS MUSIC ON · Ibiza"
   },
   {
-    "name": "Marbs",
-    "key": "marbs",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Desert Hearts @ Ductwork at Silo Dallas · Dallas"
-  },
-  {
     "name": "Marcellus Pittman",
     "key": "marcelluspittman",
     "events": 1,
@@ -2486,16 +1705,6 @@
     ],
     "onRA": true,
     "sample": "Mad Katz x Tresor · Zurich"
-  },
-  {
-    "name": "Marie Qrie",
-    "key": "marieqrie",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
   },
   {
     "name": "Mariona",
@@ -2588,16 +1797,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Mefjus",
-    "key": "mefjus",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "Melody RA+RE",
     "key": "melodyrare",
     "events": 1,
@@ -2636,26 +1835,6 @@
     ],
     "onRA": true,
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
-  },
-  {
-    "name": "Mike Dunn",
-    "key": "mikedunn",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
-    "name": "Mikey Lion",
-    "key": "mikeylion",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Desert Hearts @ Ductwork at Silo Dallas · Dallas"
   },
   {
     "name": "Miss I",
@@ -2716,16 +1895,6 @@
     ],
     "onRA": true,
     "sample": "East End Dubs at DC10 · Ibiza"
-  },
-  {
-    "name": "Muffy",
-    "key": "muffy",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "Nadja",
@@ -2818,16 +1987,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Niko B",
-    "key": "nikob",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
     "name": "no_ip",
     "key": "noip",
     "events": 1,
@@ -2836,16 +1995,6 @@
     ],
     "onRA": true,
     "sample": "Resistance Amnesia Ibiza · Ibiza"
-  },
-  {
-    "name": "Noga Erez",
-    "key": "nogaerez",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Kygo at Olympiapark Süd · Munich"
   },
   {
     "name": "NOHR",
@@ -2878,16 +2027,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Notre Dame",
-    "key": "notredame",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "NTO",
     "key": "nto",
     "events": 1,
@@ -2916,6 +2055,16 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
+  },
+  {
+    "name": "OJ Willis",
+    "key": "ojwillis",
+    "events": 1,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "Acid Ballroom: Paranoid London · Leeds"
   },
   {
     "name": "Oko Stellar",
@@ -2968,26 +2117,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "P Money",
-    "key": "pmoney",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Paco Osuna",
-    "key": "pacoosuna",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Pampa",
     "key": "pampa",
     "events": 1,
@@ -2996,16 +2125,6 @@
     ],
     "onRA": true,
     "sample": "ANNĒ - Ben Klock - BONDARŨK - JXXXO - Pampa - Setaoc Mass - + Under Cl"
-  },
-  {
-    "name": "Paranoid London",
-    "key": "paranoidlondon",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Dissonanze Festival · Rome"
   },
   {
     "name": "PARISI",
@@ -3048,16 +2167,6 @@
     "sample": "Experts Only Festival 2026 · New York City"
   },
   {
-    "name": "Phives",
-    "key": "phives",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Piem",
     "key": "piem",
     "events": 1,
@@ -3078,16 +2187,6 @@
     "sample": "VORTEK'S @ Razzmatazz · Barcelona"
   },
   {
-    "name": "Pozzy",
-    "key": "pozzy",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
     "name": "Protokseed",
     "key": "protokseed",
     "events": 1,
@@ -3096,16 +2195,6 @@
     ],
     "onRA": true,
     "sample": "Amber Broos at Fort l'Écluse · Leaz"
-  },
-  {
-    "name": "Quest (IT)",
-    "key": "questit",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
   },
   {
     "name": "R Squared",
@@ -3118,16 +2207,6 @@
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
   },
   {
-    "name": "r00bies4ever",
-    "key": "r00bies4ever",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Rampue",
     "key": "rampue",
     "events": 1,
@@ -3136,16 +2215,6 @@
     ],
     "onRA": true,
     "sample": "Voodoo Village 2026 · Brussels"
-  },
-  {
-    "name": "Raye",
-    "key": "raye",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
   },
   {
     "name": "Reelow",
@@ -3308,16 +2377,6 @@
     "sample": "FUSE ➔ Malta 2026 · All"
   },
   {
-    "name": "Rudeboy",
-    "key": "rudeboy",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
-  },
-  {
     "name": "RY X",
     "key": "ryx",
     "events": 1,
@@ -3336,6 +2395,16 @@
     ],
     "onRA": true,
     "sample": "SONNY FODERA - CLOSING PARTY · Ibiza"
+  },
+  {
+    "name": "Saint Ludo",
+    "key": "saintludo",
+    "events": 1,
+    "sources": [
+      "bandsintown"
+    ],
+    "onRA": true,
+    "sample": "Set in the lush and picturesque surroundings of Vogrie Country park ju"
   },
   {
     "name": "SALIMATA",
@@ -3388,16 +2457,6 @@
     "sample": "Maceo Plex at Amnesia Ibiza · Ibiza"
   },
   {
-    "name": "SATURNSARii",
-    "key": "saturnsarii",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
-  },
-  {
     "name": "Seb Zito",
     "key": "sebzito",
     "events": 1,
@@ -3428,16 +2487,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "Shinedoe",
-    "key": "shinedoe",
-    "events": 1,
-    "sources": [
-      "songkick"
-    ],
-    "onRA": true,
-    "sample": "Shinedoe @ Berghain · Berlin"
-  },
-  {
     "name": "Sim0ne",
     "key": "sim0ne",
     "events": 1,
@@ -3458,36 +2507,6 @@
     "sample": "Voodoo Village 2026 · Brussels"
   },
   {
-    "name": "Skantia",
-    "key": "skantia",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Skeptical",
-    "key": "skeptical",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Skin On Skin",
-    "key": "skinonskin",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "ARC Music Festival 2026 · Chicago"
-  },
-  {
     "name": "Socrates",
     "key": "socrates",
     "events": 1,
@@ -3498,6 +2517,16 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
+    "name": "Son of Son",
+    "key": "sonofson",
+    "events": 1,
+    "sources": [
+      "ra"
+    ],
+    "onRA": true,
+    "sample": "Voodoo Village 2026 · Brussels"
+  },
+  {
     "name": "soraya",
     "key": "soraya",
     "events": 1,
@@ -3506,16 +2535,6 @@
     ],
     "onRA": true,
     "sample": "Experts Only Festival 2026 · New York City"
-  },
-  {
-    "name": "SOTA",
-    "key": "sota",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
   },
   {
     "name": "Soul Mass Transit System",
@@ -3568,16 +2587,6 @@
     "sample": "Sara Landry · Miami"
   },
   {
-    "name": "T & Sugah",
-    "key": "tandsugah",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "The Blaze",
     "key": "theblaze",
     "events": 1,
@@ -3598,16 +2607,6 @@
     "sample": "FUSE ➔ Malta 2026 · All"
   },
   {
-    "name": "The North",
-    "key": "thenorth",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
-  },
-  {
     "name": "THELMA",
     "key": "thelma",
     "events": 1,
@@ -3626,16 +2625,6 @@
     ],
     "onRA": true,
     "sample": "Dissonanze Festival · Rome"
-  },
-  {
-    "name": "Tiago AF",
-    "key": "tiagoaf",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Hungry4 ps. Mall Grab (extended set) Under The Bridge - Open Air · Lis"
   },
   {
     "name": "Tiger & Woods",
@@ -3676,16 +2665,6 @@
     ],
     "onRA": true,
     "sample": "III Points 2026 · Miami"
-  },
-  {
-    "name": "Tooth",
-    "key": "tooth",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Josh Baker at Bramham Park · Leeds"
   },
   {
     "name": "TORI ANN",
@@ -3748,36 +2727,6 @@
     "sample": "Luke Slater at Melkweg · Amsterdam"
   },
   {
-    "name": "Viridity",
-    "key": "viridity",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Visages",
-    "key": "visages",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
-    "name": "Voltage",
-    "key": "voltage",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
-  },
-  {
     "name": "VON DI",
     "key": "vondi",
     "events": 1,
@@ -3796,16 +2745,6 @@
     ],
     "onRA": true,
     "sample": "VORTEK'S @ Razzmatazz · Barcelona"
-  },
-  {
-    "name": "Waeys",
-    "key": "waeys",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Wayne Snow",
@@ -3828,6 +2767,16 @@
     "sample": "Pre sale tickets for 2027 drop on Friday 8th May at 10am. Scroll down "
   },
   {
+    "name": "WhoMadeWho",
+    "key": "whomadewho",
+    "events": 1,
+    "sources": [
+      "songkick"
+    ],
+    "onRA": true,
+    "sample": "WhoMadeWho @ Pacha Ibiza · Ibiza"
+  },
+  {
     "name": "Willow",
     "key": "willow",
     "events": 1,
@@ -3836,16 +2785,6 @@
     ],
     "onRA": true,
     "sample": "FUSE ➔ Malta 2026 · All"
-  },
-  {
-    "name": "Window Kid",
-    "key": "windowkid",
-    "events": 1,
-    "sources": [
-      "bandsintown"
-    ],
-    "onRA": true,
-    "sample": "Worried About Henry returns to Malta in September 2026 for 3 days of D"
   },
   {
     "name": "Winson Ngoh",
@@ -3918,16 +2857,6 @@
     "sample": "Jane Fitz at Omana-Festival · Kalamitsi"
   },
   {
-    "name": "Zack Fox",
-    "key": "zackfox",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "III Points & Club Space presents Andrew Music Club 2026 · Miami"
-  },
-  {
     "name": "ZAHNATZIN",
     "key": "zahnatzin",
     "events": 1,
@@ -3936,16 +2865,6 @@
     ],
     "onRA": true,
     "sample": "BCCO with Yanamaste, future.666  · Cologne"
-  },
-  {
-    "name": "Zip",
-    "key": "zip",
-    "events": 1,
-    "sources": [
-      "ra"
-    ],
-    "onRA": true,
-    "sample": "Dimensions Festival 2026 - Barbarellas Closing Party · All"
   },
   {
     "name": "Beyond Wonderland",
