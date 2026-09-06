@@ -318,6 +318,7 @@ button:focus{outline:none;}
 @keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* ── HEADER AUTH PILL ── */
 .auth-user-pill{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px 5px 7px;display:flex;align-items:center;gap:6px;cursor:pointer;font-family:inherit;}
@@ -481,7 +482,7 @@ button:focus{outline:none;}
 
     <!-- DJ SPOTLIGHT -->
     <div class="home-sec" style="padding-top:4px;">
-      <span class="home-sec-title">DJ of the month</span>
+      <span class="home-sec-title">DJ Spotlight</span>
     </div>
     <div class="dj-spotlight" id="dj-spotlight-card" role="button" tabindex="0"></div>
 
@@ -601,6 +602,7 @@ button:focus{outline:none;}
           <label for="acct-photo-input" class="acct-photo-btn" title="Change photo">✏️</label>
           <input type="file" id="acct-photo-input" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
         </div>
+        <div style="font-size:11px;color:var(--text-mute);text-align:center;margin-top:4px;">Profile photo saved on this device only</div>
         <div class="acct-name" id="acct-name">My account</div>
         <button class="acct-name-edit-btn" onclick="openNameEditor()">Edit name</button>
         <div class="acct-email" id="acct-email"></div>
@@ -672,6 +674,7 @@ button:focus{outline:none;}
     <div id="det-source" style="margin-top:14px;"></div>
     <div class="det-cta">
       <a id="det-ticket" href="#" target="_blank" class="det-get">Get tickets →</a>
+      <button aria-label="Share event" id="det-share" class="det-icbtn" onclick="shareEvent()" style="display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
       <button aria-label="Save event" id="det-save" class="det-icbtn" onclick="toggleDetailSave()">♡</button>
     </div>
   </div>
@@ -1019,10 +1022,25 @@ sb.auth.onAuthStateChange(async(event,session)=>{
 });
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-setTimeout(()=>{
-  document.getElementById('splash').style.opacity='0';
-  setTimeout(()=>document.getElementById('splash').style.display='none',400);
-},2000);
+let splashHidden=false;
+function hideSplash(){
+  if(splashHidden) return;
+  splashHidden=true;
+  const splash=document.getElementById('splash');
+  if(splash){ splash.style.opacity='0'; setTimeout(()=>splash.remove(),400); }
+}
+setTimeout(hideSplash,2000);
+
+function addSkeletons(){
+  const skels=['home-featured','home-festivals','home-clubs'];
+  skels.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      el.innerHTML=[1,2,3].map(()=>'<div style="width:220px;height:120px;border-radius:16px;background:linear-gradient(90deg,#1d1d25 25%,#26262f 50%,#1d1d25 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;flex-shrink:0;"></div>').join('');
+    }
+  });
+}
+addSkeletons();
 
 // ── HOME FEATURED ─────────────────────────────────────────────────────────────
 async function fetchAudioDBImg(name){
@@ -1095,7 +1113,7 @@ async function renderSpotlight(){
     <img src="${img||COUNTRY_IMG_HERO_FALLBACK}" alt="" onerror="this.src=COUNTRY_IMG_HERO_FALLBACK;this.onerror=null"/>
     <div class="dj-spotlight-grad"></div>
     <div class="dj-spotlight-body">
-      <div class="dj-badge">DJ OF THE MONTH</div>
+      <div class="dj-badge">DJ SPOTLIGHT</div>
       <div class="dj-name">${esc(winner.name)}</div>
       <div class="dj-sub">${esc(genre)} · ${winner.count} upcoming event${winner.count!==1?'s':''}</div>
     </div>`;
@@ -1637,6 +1655,7 @@ async function loadEvents(){
   renderCountries();
   renderFeatured();
   renderPersonalHome();
+  hideSplash();
   // Visible diagnostic: if we truly have nothing to show, tell the user why (with the real error) + offer retry
   if(EVENTS.length>0){ hideLoadError(); }
   else { showLoadError(lastErr); }
@@ -1651,8 +1670,8 @@ function showLoadError(err){
     el.style.cssText='position:fixed;left:12px;right:12px;top:12px;z-index:600;max-width:406px;margin:0 auto;background:#2a1416;border:1px solid #e5484d;color:#ffd7d9;padding:12px 14px;border-radius:14px;font-size:12.5px;line-height:1.45;text-align:center;font-family:inherit;box-shadow:0 10px 30px -10px rgba(0,0,0,.6);';
     document.body.appendChild(el);
   }
-  const detail = err ? ('['+(err.code||err.status||'?')+'] '+(err.message||'')) : 'sin conexión / red bloqueada';
-  el.innerHTML='⚠️ No se pudieron cargar los eventos.<br><span style="color:#ffa8ac;font-size:11px;">'+detail+'</span><br><button onclick="hideLoadError();loadEvents();" style="margin-top:9px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;font-family:inherit;font-size:12.5px;">Reintentar</button>';
+  const detail = err ? ('['+(err.code||err.status||'?')+'] '+(err.message||'')) : 'no connection / network blocked';
+  el.innerHTML='⚠️ Could not load events.<br><span style="color:#ffa8ac;font-size:11px;">'+detail+'</span><br><button onclick="hideLoadError();loadEvents();" style="margin-top:9px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:999px;padding:8px 18px;font-weight:700;cursor:pointer;font-family:inherit;font-size:12.5px;">Retry</button>';
   el.style.display='block';
 }
 
@@ -2021,7 +2040,7 @@ function openDetail(id){
   document.getElementById('det-when').innerHTML=`${wd} ${day} ${mon}<small>${dleft}</small>`;
   const flag=FLAGS[ev.country]||'🌍';
   document.getElementById('det-where').innerHTML=ev.venue
-    ? `${esc(ev.venue)}<small>${esc(ev.city||'')}${ev.country?', '+esc(ev.country):''} ${flag}</small>`
+    ? `<a href="https://maps.google.com/?q=${encodeURIComponent(ev.venue+', '+ev.city)}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;cursor:pointer;border-bottom:1px solid var(--accent-line);">📍 ${esc(ev.venue)}</a><small>${esc(ev.city||'')}${ev.country?', '+esc(ev.country):''} ${flag}</small>`
     : `${esc(ev.city||'TBA')}<small>${ev.country?esc(ev.country)+' ':''}${flag}</small>`;
   const lu=document.getElementById('det-lineup');
   lu.innerHTML=ev.djs.length
@@ -2038,13 +2057,25 @@ function openDetail(id){
   // Ticket button — hide when no real URL
   const tickBtn=document.getElementById('det-ticket');
   const hasTicket=ev.ticket&&ev.ticket!=='#'&&ev.ticket.length>5;
-  tickBtn.href=hasTicket?ev.ticket:'#';
-  tickBtn.style.display=hasTicket?'':'none';
+  const ctaBar=document.querySelector('.det-cta');
+  if(hasTicket){
+    tickBtn.href=ev.ticket;
+    tickBtn.style.display='';
+    if(ctaBar.querySelector('[style*="text-align"]')) ctaBar.querySelector('[style*="text-align"]').remove();
+  } else {
+    tickBtn.style.display='none';
+    if(!ctaBar.querySelector('[style*="text-align"]')){
+      const fallback=document.createElement('div');
+      fallback.style.cssText='text-align:center;font-size:12px;color:var(--text-mute);margin-bottom:8px;flex:1;';
+      fallback.textContent='No ticket link available for this event';
+      ctaBar.insertBefore(fallback, ctaBar.firstChild);
+    }
+  }
   const isSaved=saved.includes(ev.id);
   const saveBtn=document.getElementById('det-save');
   saveBtn.className='det-icbtn'+(isSaved?' saved':'');
   saveBtn.textContent=isSaved?'♥':'♡';
-  saveBtn.style.cssText=hasTicket?'':'flex:1';
+  saveBtn.style.flex=hasTicket?'':'1';
   const detEl=document.getElementById('detail');
   detEl.className='open'; detEl.style.zIndex=(++overlayZ);   // last-opened overlay on top (so a detail opened from inside a DJ profile shows ABOVE it, not behind)
   document.body.style.overflow='hidden';
@@ -2056,6 +2087,22 @@ function closeDetail(){
   document.getElementById('detail').className='';
   if(document.getElementById('dj-detail').className!=='open'){ document.body.style.overflow=''; overlayZ=210; }
   detailEv=null;
+}
+function shareEvent(){
+  if(!detailEv) return;
+  const url=detailEv.ticket_url||'https://soundmyth.vercel.app';
+  const text=`${detailEv.name} — ${detailEv.city}, ${detailEv.date}`;
+  if(navigator.share){
+    navigator.share({title:detailEv.name,text:text,url:url}).catch(()=>{});
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(()=>{
+      const toast=document.createElement('div');
+      toast.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--surface-2);color:var(--text);padding:10px 16px;border-radius:999px;font-size:12px;z-index:9999;';
+      toast.textContent='Link copied';
+      document.body.appendChild(toast);
+      setTimeout(()=>toast.remove(),2000);
+    }).catch(()=>{});
+  }
 }
 // Back / edge-swipe closes the TOP-MOST overlay (whichever was opened last) instead of leaving.
 window.addEventListener('popstate', function(){
@@ -2215,7 +2262,7 @@ async function sendMagicLink(){
   const btn=document.getElementById('auth-submit');
   if(btn){btn.disabled=true;btn.textContent='Sending…';}
   const{error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:'https://soundmyth.vercel.app',data:{marketing_opt_in:consent}}});
-  if(error){if(btn){btn.disabled=false;btn.textContent='Continue with email →';}console.error('signInWithOtp error:',error);const detail=(error.message&&error.message!=='{}')?error.message:(error.code||error.name||'');alert('Error '+(error.status||'')+': '+(detail||'fallo al enviar el email (revisa la config SMTP)'));return;}
+  if(error){if(btn){btn.disabled=false;btn.textContent='Continue with email →';}console.error('signInWithOtp error:',error);const detail=(error.message&&error.message!=='{}')?error.message:(error.code||error.name||'');alert('Error '+(error.status||'')+': '+(detail||'failed to send email (check SMTP config)'));return;}
   document.getElementById('auth-step-email').style.display='none';
   document.getElementById('auth-sent-msg').innerHTML=`We sent a link to <strong>${email}</strong>. Open it on this device to log in.`;
   document.getElementById('auth-step-sent').style.display='block';
@@ -2576,6 +2623,9 @@ function renderPersonalHome(){
         h+=`<div style="padding:0 16px 4px">${inC.map(e=>{shownIds.add(e.id);return eventRowHTML(e);}).join('')}</div>`;
       }
     }
+    if(shownIds.size===0){
+      h+=`<div style="text-align:center;padding:40px 24px;color:var(--text-mute);"><div style="font-size:32px;margin-bottom:12px;">🎵</div><div style="font-size:15px;font-weight:600;color:var(--text-dim);margin-bottom:8px;">No events found for your preferences</div><div style="font-size:13px;line-height:1.5;margin-bottom:20px;">Try adding more cities or styles to see recommendations.</div><button class="btn-soft" onclick="openPrefsEditor()" style="font-size:13px;">Edit preferences</button></div>`;
+    }
   }catch(e){ console.warn('personal home section failed',e); }
   el.innerHTML=h;
   hydrateAvatars(el);
@@ -2702,6 +2752,38 @@ document.addEventListener('keydown', function(e){
 
 // PWA: register the service worker (installable + offline shell). Best-effort.
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }); }
+
+// PWA: beforeinstallprompt handler for install banner
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  setTimeout(showInstallBanner,30000);
+});
+
+function showInstallBanner(){
+  if(!deferredInstallPrompt) return;
+  if(window.matchMedia('(display-mode: standalone)').matches) return;
+  const banner=document.createElement('div');
+  banner.id='install-banner';
+  banner.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px 16px;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:var(--shadow);';
+  banner.innerHTML=`<div style="flex:1"><div style="font-size:13px;font-weight:600">Install Sound Myth</div><div style="font-size:12px;color:var(--text-mute)">Add to your home screen for the best experience</div></div><button onclick="installApp()" style="background:var(--accent);color:var(--accent-ink);border:none;border-radius:var(--r-sm);padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;flex-shrink:0;">Install</button><button onclick="document.getElementById('install-banner')?.remove()" style="background:none;border:none;color:var(--text-mute);cursor:pointer;font-size:18px;padding:4px;flex-shrink:0;">✕</button>`;
+  document.body.appendChild(banner);
+}
+
+function installApp(){
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then(()=>{
+    deferredInstallPrompt=null;
+    document.getElementById('install-banner')?.remove();
+  });
+}
+
+window.addEventListener('appinstalled',()=>{
+  deferredInstallPrompt=null;
+  document.getElementById('install-banner')?.remove();
+});
 
 </script>
 </body>
