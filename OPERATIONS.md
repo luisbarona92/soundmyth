@@ -39,18 +39,23 @@ Resident Advisor ────→ scrape-clubs-ra.js ─────────�
 ## Weekly Pipeline (GitHub Actions — Sundays 2:00 UTC)
 
 ```
-Step 0:  enrich-songkick-urls.js  (5 min)   → auto-find SK URLs for new DJs
-Step 1:  scrape-extended.js       (20 min)  → 590 DJs × BIT API + Songkick
-Step 2:  scrape-festivals-bit.js  (10 min)  → 262 festivals × BIT + SK
-Step 3:  scrape-festivals-direct.js (3 min) → festivals without SK: fetch their website
-Step 4:  scrape-clubs-ra.js       (5 min)   → 163 clubs × RA GraphQL (3-strategy fallback)
-Step 5:  dedupe.js                (3 min)   → merge duplicates + festival consolidation
-Step 6:  enrich-images.js         (15 min)  → DJ photos (name variants) + festival og:images + overrides
-Step 7:  validate.js              (1 min)   → auto-fix data quality (genres, countries)
-Step 8:  purge.js                 (1 sec)   → delete events >15 days old
-Step 9:  Commit updated JSONs to repo
-Total: ~47 minutes (timeout: 65 min)
+Step 0:  enrich-songkick-urls.js   (5 min)   → auto-find SK URLs for new DJs
+Step 1:  scrape-extended.js        (40 min)  → 852 DJs × BIT API + Songkick cascade
+Step 2:  scrape-festivals-bit.js   (10 min)  → 262 festivals × BIT + SK
+Step 3:  scrape-festivals-direct.js (3 min)  → festivals without SK: fetch their website
+Step 4:  enrich-clubs-ra.js        (10 min)  → auto-fill ra_url for clubs without one (ra.co only, no secrets)
+Step 5:  scrape-clubs-ra.js        (10 min)  → 163+ clubs × RA GraphQL (3-strategy fallback)
+Step 6:  dedupe.js                 (3 min)   → merge duplicates + festival consolidation (6 passes)
+Step 7:  discover-djs.js           (15 min)  → find unlisted EDM DJs via RA verification; writes artists_candidates.json
+Step 8:  cleanup-junk.js           (12 min)  → delete events whose DJs have no EDM presence; ⚠️ can permanently delete
+Step 9:  enrich-images.js          (20 min)  → DJ photos (name variants + CACHE_VERSION=4) + festival og:images
+Step 10: validate.js               (1 min)   → auto-fix data quality (genres, countries)
+Step 11: purge.js                  (1 min)   → delete events >15 days old + orphaned saved_events rows
+Step 12: Commit updated JSONs to repo
+Total: ~120 minutes (timeout: 120 min)
 ```
+
+> ⚠️ **cleanup-junk.js** permanently deletes events from Supabase. It keeps events whose DJ bill contains at least one artist from `artists_all.json`, an RA-verified candidate in `artists_candidates.json` (`onRA:true` or `err:true`), or `artists_allow.json`. Add DJs to `artists_allow.json` to rescue false-positive deletions.
 
 ---
 
