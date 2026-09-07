@@ -59,9 +59,12 @@ jobs:
           BIT_APP_ID: ${{ secrets.BIT_APP_ID }}
         run: node scrape-festivals-bit.js
 
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
       - name: Scrape Festivals (direct websites)
         continue-on-error: true
-        timeout-minutes: 10
+        timeout-minutes: 15
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}

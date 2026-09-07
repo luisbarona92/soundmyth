@@ -10,6 +10,10 @@
  * Creates 1 Supabase event per festival (no lineup — JS-rendered sites).
  * Only processes festivals that have NO events yet in the current run list.
  *
+ * Fallback: if a plain fetch() yields no usable data, retries with a headless
+ * Chromium browser (Playwright) for JS-rendered festival sites (Tomorrowland,
+ * EDC, etc.). The browser is launched lazily and shared across all retries.
+ *
  * Usage: node scrape-festivals-direct.js
  */
 
@@ -19,6 +23,7 @@ import { config }        from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { cleanEvent } from './normalize.js';
+import { chromium } from 'playwright';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 config({ path: resolve(__dirname, '.env') });
@@ -49,6 +54,24 @@ async function fetchHTML(url) {
     const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(8000), redirect: 'follow' });
     if (!res.ok) return null;
     return await res.text();
+  } catch { return null; }
+}
+
+// Lazy-initialised browser — only started when a fetch fallback is needed
+let _browser = null;
+
+async function fetchWithBrowser(url) {
+  try {
+    if (!_browser) _browser = await chromium.launch({ headless: true });
+    const page = await _browser.newPage();
+    try {
+      await page.setExtraHTTPHeaders({ 'Accept-Language': 'en-US,en;q=0.9' });
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
+      await page.waitForTimeout(2500);  // let JS frameworks render
+      return await page.content();
+    } finally {
+      await page.close().catch(() => {});
+    }
   } catch { return null; }
 }
 
@@ -158,7 +181,7 @@ async function main() {
   console.log(`🗓  Cutoff date      : ${TODAY}  (only future events)\n`);
   console.log('─'.repeat(60));
 
-  let found = 0, skipped = 0, errors = 0, upserted = 0;
+  let found = 0, skipped = 0, errors = 0, upserted = 0, browserFallbacks = 0;
   const events = [];
 
   for (let i = 0; i < todo.length; i++) {
@@ -166,23 +189,32 @@ async function main() {
     const pct  = String(Math.round(((i + 1) / todo.length) * 100)).padStart(3);
     process.stdout.write(`[${String(i+1).padStart(3)}/${todo.length}] ${pct}% │ ${fest.name.padEnd(38)} `);
 
-    const html = await fetchHTML(fest.website);
-    if (!html) {
-      process.stdout.write(`✗  fetch error\n`);
-      errors++;
-      await sleep(DELAY);
-      continue;
-    }
+    let html = await fetchHTML(fest.website);
+    let ev   = html ? extractFestivalEvent(html, fest) : null;
+    let usedBrowser = false;
 
-    const ev = extractFestivalEvent(html, fest);
+    // Fallback to headless browser if fetch failed or yielded no event data
     if (!ev) {
-      process.stdout.write(`–  no upcoming date found\n`);
-      skipped++;
+      const htmlBrowser = await fetchWithBrowser(fest.website);
+      if (htmlBrowser) {
+        ev = extractFestivalEvent(htmlBrowser, fest);
+        if (ev) { usedBrowser = true; browserFallbacks++; }
+      }
+    }
+
+    if (!ev) {
+      if (!html) {
+        process.stdout.write(`✗  fetch error\n`);
+        errors++;
+      } else {
+        process.stdout.write(`–  no upcoming date found\n`);
+        skipped++;
+      }
       await sleep(DELAY);
       continue;
     }
 
-    process.stdout.write(`✓  ${ev.date}  ${ev.city}, ${ev.country}\n`);
+    process.stdout.write(`✓  ${ev.date}  ${ev.city}, ${ev.country}${usedBrowser ? '  [browser]' : ''}\n`);
     found++;
     events.push(ev);
 
@@ -204,6 +236,7 @@ async function main() {
   console.log('\n╔══════════════════════════════════════════════════╗');
   console.log('║  Direct scrape complete                          ║');
   console.log(`║  Found upcoming : ${String(found).padEnd(30)}║`);
+  console.log(`║  Browser fallbk : ${String(browserFallbacks).padEnd(30)}║`);
   console.log(`║  No future date : ${String(skipped).padEnd(30)}║`);
   console.log(`║  Fetch errors   : ${String(errors).padEnd(30)}║`);
   console.log(`║  Total upserted : ${String(upserted).padEnd(30)}║`);
@@ -215,4 +248,12 @@ async function main() {
   }
 }
 
-main().then(() => process.exit(0)).catch(err => { console.error('Fatal:', err); process.exit(1); });
+async function run() {
+  try {
+    await main();
+  } finally {
+    if (_browser) await _browser.close().catch(() => {});
+  }
+}
+
+run().then(() => process.exit(0)).catch(err => { console.error('Fatal:', err); process.exit(1); });
